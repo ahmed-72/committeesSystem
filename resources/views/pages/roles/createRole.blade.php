@@ -13,6 +13,13 @@
 @endsection
 
 @section('content')
+@if($errors->any())
+    <ul  class="alert alert-danger col-6" dir="rtl">
+        @foreach($errors->all() as $message)
+        <li>{{$message}}</li>
+        @endforeach
+    </ul>
+    @endif
 <div class="card-body  pt-9 pb-0 bg-gray-200" dir="rtl">
     <form class="form" action="{{route('roles.store')}}" method="post">
         @csrf

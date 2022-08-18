@@ -5,6 +5,8 @@ use App\Http\Controllers\committeeController;
 use App\Http\Controllers\sessionController;
 use App\Http\Controllers\notificationController;
 use App\Http\Controllers\rolesController;
+use App\Http\Controllers\roleUserController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +51,7 @@ Route::middleware(['auth',])->group(function () {
 Route::get('/addCommittee',[committeeController::class,'create'] );
 Route::post('/addCommittee',[committeeController::class,'store'] )->name('addCommittee.store');
 
-Route::get('/showCommittees',[committeeController::class,'index'] )->name('showCommittee');
+Route::get('/showCommittees',[committeeController::class,'index'] )->middleware('user.type:super-admin')->name('showCommittee');
 
 Route::get('/committee/{committeeID}',[committeeController::class,'show'] )->name('committee');
 
@@ -72,7 +74,7 @@ Route::get('/deleteTask/{taskID}/{committeeID}',[committeeController::class,'del
 Route::get('/deleteRegulation/{regulationID}/{committeeID}',[committeeController::class,'deleteRegulation'] )->name('delete.regulation');
 
 // addDiscussionTopics
-Route::get('/addDiscussionTopics',[committeeController::class,'createTopics'] )->name('addDiscussionTopics.create');
+Route::get('/addDiscussionTopics/{committeeID}',[committeeController::class,'createTopics'] )->name('addDiscussionTopics.create');
 Route::post('/addDiscussionTopics',[committeeController::class,'storeTopics'] )->name('addDiscussionTopics.store');
 
 Route::get('/showSessionTopics/{committeeID}/{sessionID}',[sessionController::class,'showSessionTopics'] )->name('showSessionTopics');
@@ -94,16 +96,23 @@ Route::get('/markNotificationAsRead/{notificationID}',[notificationController::c
 //roleeeeeees
 Route::resource('roles', rolesController::class) ;
 
+Route::resource('roleUser', roleUserController::class);// ->middleware('user.type:super-admin') ;
+
+
+// Route::get('/roleUser',[rolesController::class,'role_user_create'] )->name('roleUser.create');
+// Route::post('/roleUser',[rolesController::class,'role_user_store'] )->name('roleUser.store');
+
 });
 
 
 
 //'App\Http\Controllers\projectController@signin'
 
-Route::get('/printReport', function () {
+Route::get('/printReport/{sessionID}', function () {
     return view('pages/sessions/printReport');
-});
+})->name('printReport');
 
 Route::get('/create', function () {
     return view('pages/committees/create');
 });
+

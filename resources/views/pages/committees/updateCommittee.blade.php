@@ -98,10 +98,10 @@
                                         <select aria-hidden="true" class="form-control w-auto ml-5"
                                             name="memberDescription" id="memberDescription">
                                             <option value=""></option>
-                                            <option value="CommitteeChairman">رئيس اللجنة</option>
-                                            <option value="CommitteeViceChairman">نائب رئيس اللجنة</option>
-                                            <option value="CommitteeSecretary">أمين سر اللجنة</option>
-                                            <option value="CommitteeMember">عضو لجنة</option>
+                                            <option value="رئيس اللجنة">رئيس اللجنة</option>
+                                            <option value="نائب رئيس اللجنة">نائب رئيس اللجنة</option>
+                                            <option value="أمين سر اللجنة">أمين سر اللجنة</option>
+                                            <option value="عضو لجنة">عضو لجنة</option>
                                         </select>
                                     </div>
                                     <div class=" col-sm-3 ml-3 " id="colo">

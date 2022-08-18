@@ -44,8 +44,13 @@
         <input class="form-control bg-transparent px-15" type="text" placeholder="Name" name="name" id="name"><br>
         <input class="form-control bg-transparent px-15" type="email" placeholder="Email" name="email"><br>
         <input class="form-control bg-transparent px-15" type="password" placeholder="Password" name="password"><br>
-        <input class="form-control bg-transparent px-15" type="password_confirmation" placeholder="confirm Password" name="password_confirmation"><br>
-        <input class="form-control bg-transparent px-15" type="employeeID" placeholder="employeeID" name="employeeID"><br>
+        <input class="form-control bg-transparent px-15" type="password" placeholder="confirm Password" name="password_confirmation"><br>
+        <select class="form-control bg-transparent px-15" name="employeeID" id="employeeID">
+        <option value="" disabled selected hidden>select an employee as(employee Id -- employee Name)</option>
+            @foreach($employees as $employee)
+            <option value="{{$employee->employeeID}}">{{$employee->employeeID}}--{{$employee->employeeName}}</option>
+            @endforeach
+        </select>
         <input class="form-control bg-transparent px-15" type="file" name="image" id="image"><br> 
         <input type="submit" class="btn btn-sm fw-bold btn-primary " id="submit" value="Add">
     </form>

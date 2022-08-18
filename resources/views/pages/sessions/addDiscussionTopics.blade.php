@@ -52,20 +52,8 @@
                 <hr>
                 <div class="mt-3">
                     <label for="committeeID">رقم اللجنة</label>
-                    <select class="form-control" type="text" name="committeeID" id="committeeID">
-                        <option value="" disabled selected hidden>تاريخ إنشاء اللجنة -- رقم اللجنة -- اسم اللجنة
-                        </option>
-
-                        @foreach($committees as $committee)
-                        <?php
-                        $id = $committee->committee_committeeID;
-                        $replacement = ' -- ';
-                        $committeeID_Date =substr_replace($id, $replacement, 8, 0); 
-                        ?>
-                        <option value="{{$committee->committee_committeeID}}">{{$committeeID_Date}} --
-                            {{$committee->committee->committeeName}}</option>
-                        @endforeach
-                    </select>
+                    <input class="form-control" type="text" name="committeeID" id="{{$committee->committeeID}}" readonly value="{{$committee->committeeID}}">
+                    <input class="form-control" type="text" name="committeeName" id="{{$committee->committeeName}}" readonly value="{{$committee->committeeName}}">
                 </div>
 
                 <!-- begin topics -->

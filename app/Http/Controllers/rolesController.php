@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\role;
+use App\Models\roleUser;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\returnSelf;
 
 class rolesController extends Controller
 {
@@ -15,7 +19,7 @@ class rolesController extends Controller
      */
     public function index()
     {
-      //  Gate::authorize('role.view');
+        //  Gate::authorize('role.view');
 
         $roles = role::all();
         return view('pages/roles/viewRole')->with('roles', $roles);
@@ -49,8 +53,8 @@ class rolesController extends Controller
             'abilities.required' => 'اختر الصلاحيات المطلوبة'
         ]);
 
-        $role=role::create($request->all());
-        return redirect()->route('roles.index')->with('success','تمت الإضافة بنجاح');
+        $role = role::create($request->all());
+        return redirect()->route('roles.index')->with('success', 'تمت الإضافة بنجاح');
     }
 
     /**
@@ -61,7 +65,6 @@ class rolesController extends Controller
      */
     public function show($id)
     {
-        
     }
 
     /**
@@ -72,7 +75,7 @@ class rolesController extends Controller
      */
     public function edit($id)
     {
-        $role=role::findOrFail($id);
+        $role = role::findOrFail($id);
         return view('pages/roles/updateRole')->with('role', $role);
     }
 
@@ -92,10 +95,10 @@ class rolesController extends Controller
             'name.required' => 'أضف اسم الصلاحية',
             'abilities.required' => 'اختر الصلاحيات المطلوبة'
         ]);
-        $role=role::findOrFail($id);
+        $role = role::findOrFail($id);
 
         $role->update($request->all());
-        return redirect()->route('roles.index')->with('success','تم التعديل بنجاح');
+        return redirect()->route('roles.index')->with('success', 'تم التعديل بنجاح');
     }
 
     /**
@@ -109,7 +112,8 @@ class rolesController extends Controller
         Gate::authorize('role.delete');
 
         role::destroy($id);
-        return redirect()->route('roles.index')->with('success','تم الحذف بنجاح');
-
+        return redirect()->route('roles.index')->with('success', 'تم الحذف بنجاح');
     }
+
+
 }

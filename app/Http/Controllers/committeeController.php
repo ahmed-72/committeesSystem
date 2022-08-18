@@ -237,7 +237,13 @@ class CommitteeController extends Controller
     public function show($committeeID)
     {
         Gate::authorize('committee.view');
-
+        $today = date('Y-m-d');
+        $afterThreeDays=date('Y-m-d',strtotime('+3 days'));
+        $sessions=session::where('sessionDate','>',$today)->where('sessionDate','<',$afterThreeDays)->get();
+        foreach($sessions as $session){
+            $session->status='inProgress';
+            $session->save();
+        }
         $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics')->first();
         return view('pages/committees/committee')->with('committee', $committee);
     }
@@ -282,6 +288,7 @@ class CommitteeController extends Controller
         Gate::authorize('committee.edit');
 
         // dd($request->all());
+        if($request["membersGroup"][0]['memberName']!=null){ 
         $test=1;
         for ($i = 0; $i < count($request["membersGroup"]); $i++) {
             $employeeID=employee::where('employeeName',$request["membersGroup"][$i]["memberName"])->first();
@@ -289,7 +296,7 @@ class CommitteeController extends Controller
             if ($member != null ) $test=0; 
         }
         $request->request->add(['memberID' => $test]);
-
+    
         $request->validate([
             'commName' => ['required'],
             'membersGroup.*.memberDescription' => ['required_with:membersGroup.*.memberName'],
@@ -297,7 +304,7 @@ class CommitteeController extends Controller
         ], [
             'memberID.accepted' => 'هذا العضو مضاف فعلاً'
         ]);
-       
+    }
 
 
         $committeeName = $request['commName'];
@@ -388,7 +395,7 @@ class CommitteeController extends Controller
                 $regulation->save();
             }
         }
-        return redirect()->route('showCommittee');
+        return redirect()->route('committee',$committeeID);
     }
 
     /**
@@ -452,21 +459,24 @@ class CommitteeController extends Controller
      * @param \App\Models\Committees $commitiesController
      * @return \Illuminate\Http\Response
      */
-    public function createTopics()
+    public function createTopics($committeeID)
     {
         $user=Auth::user();
         $userID =$user->employeeID;
         //$userID = 20105025;
-        $committees = member::select('committee_committeeID')->where('employee_employeeID', $userID)->with('committee')->get();
-
-        return view('pages/sessions/addDiscussionTopics')->with('committees', $committees);
+        $committee =member::select('committee_committeeID')->where('employee_employeeID', $userID)->where('committee_committeeID',$committeeID)->first();
+       if($committee !=null){
+       $committee=committee::where('committeeID',$committeeID)->first();
+        return view('pages/sessions/addDiscussionTopics')->with('committee', $committee);}
+        else return view('pages/sessions/addDiscussionTopics')->with('fail','fail');
     }
 
     public function storeTopics(Request $request)
     {
-        $userID = 20105025;
+        $user=Auth::user();
+        $userID =$user->employeeID;
 
-        /// dd($request->all());
+        // dd($request->all());
         //check if this committee has one session at least or not yet
         $request->validate([
             'committeeID' => ['required'],

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\employee;
 use App\Models\User;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class userController extends Controller
 {
   public function create()
   {
-    return view('pages/users/addUser');
+    $employees=employee::all();
+    return view('pages/users/addUser')->with('employees',$employees);
   }
   public function store(Request $request)
   {
