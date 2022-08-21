@@ -79,7 +79,7 @@ Route::get('/deleteRegulation/{regulationID}/{committeeID}',[committeeController
 Route::get('/addDiscussionTopics/{committeeID}',[committeeController::class,'createTopics'] )->name('addDiscussionTopics.create');
 Route::post('/addDiscussionTopics',[committeeController::class,'storeTopics'] )->name('addDiscussionTopics.store');
 
-Route::get('/showSessionTopics/{committeeID}/{sessionID}',[sessionController::class,'showSessionTopics'] )->name('showSessionTopics');
+Route::get('/showSessionTopics/{committeeID}',[sessionController::class,'showSessionTopics'] )->name('showSessionTopics');
 
 Route::get('/prepareSession/{committeeID}/{sessionID}',[sessionController::class,'prepareSession'] )->name('prepareSession');
 //تاكيد الجلسة و ارسال اشعارات للاعضاء
@@ -119,5 +119,5 @@ Route::get('/create', function () {
 });
 
 
-Route::get('/committeeDetails/{committeeID}',[committeeController::class,'nawShow'] );
+Route::get('/committeeDetails/{committeeID}',[committeeController::class,'newShow'] );
 

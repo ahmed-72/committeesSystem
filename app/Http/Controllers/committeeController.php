@@ -285,7 +285,7 @@ class CommitteeController extends Controller
             $todaySessions->save();
         }
 
-        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics')->first();
+        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics','discussiontopics')->first();
         $sessions = $committee->sessions;
         $nearSessions = array();
         foreach ($sessions as $session) {
@@ -323,7 +323,7 @@ class CommitteeController extends Controller
             $todaySessions->save();
         }
 
-        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics')->first();
+        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics','discussiontopics')->first();
         $sessions = $committee->sessions;
         $nearSessions = array();
         foreach ($sessions as $session) {
@@ -331,7 +331,9 @@ class CommitteeController extends Controller
                 $nearSessions[] = $session;
             }
         }
-        return view('pages/committees/committee-details')->with(['committee'=> $committee ,'nearSessions'=>$nearSessions]);
+       // dd($committee->discussiontopics);
+
+        return view('pages/committees/committee-details')->with(['committee'=> $committee ,'nearSessions'=>$nearSessions ]);
     }
     
     /**

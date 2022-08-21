@@ -84,7 +84,7 @@ class sessionController extends Controller
      * @param \App\Models\Committees $commitiesController 
      * @return \Illuminate\Http\Response
      */
-    public function showSessionTopics($committeeID, $sessionID)
+    public function showSessionTopics($committeeID)
     {
         $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('employee')->get();
         //  dd($topics->toArray());

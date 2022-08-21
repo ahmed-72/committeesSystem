@@ -27,5 +27,8 @@ class committee extends Model
     public function sessiontopics(){
         return $this->hasMany('App\Models\sessiontopic');
     }
+    public function discussiontopics(){
+        return $this->hasMany('App\Models\discussiontopic');
+    }
     
 }
