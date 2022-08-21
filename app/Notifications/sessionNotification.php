@@ -2,27 +2,25 @@
 
 namespace App\Notifications;
 
-use App\Models\committee;
-use App\Models\sessiontopic;
-use App\Models\User;
-use Illuminate\Broadcasting\Channel;
+use App\Models\session;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserNotification extends Notification
+class sessionNotification extends Notification
 {
     use Queueable;
-protected $topic;
+    protected $session;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(sessiontopic $topic  )
+    public function __construct(session $session)
     {
-        $this->topic=$topic;
+        $this->session=$session;
     }
 
     /**
@@ -52,21 +50,26 @@ protected $topic;
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
+    /**
+    * Get the mail representation of the notification.
+    *
+    * @param  mixed  $notifiable
+    * @return \Illuminate\Notifications\Messages\MailMessage
+    */
     public function toDatabase($notifiable)
     {
         return [
-            'titel' => "قرار صادر عن لجنة". $this->topic->committee->committeeName , 
-            'body' => $this->topic->decisions ." \n ".$this->topic->executionDeadline ,
-           // 'url' =>route('notification.show'  ,$notification->id),
-            //' route('committee',$this->topic->committee_committeeID),
+            'titel' => " جلسة جديدة للجنة". $this->session->committee->committeeName , 
+            'body' =>'بتاريخ'.$this->session->sessionDate ." في قاعة".$this->session->sessionRoom .'من الساعة' .$this->session->sessionStartAt.'إلى الساعة'.$this->session->sessionEndAt ,
+            'url' =>route('committee'  ,$this->session->committee_committeeID),
+          
         ];
     }
-
     /**
      * Get the array representation of the notification.
      *
@@ -80,3 +83,4 @@ protected $topic;
         ];
     }
 }
+

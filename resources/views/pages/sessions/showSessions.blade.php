@@ -8,8 +8,8 @@
 </head>
 <body>
     
-@foreach($committees as $committee)
-{{$committee->committee_committeeID}}
+@foreach($sessions as $session)
+{{$session->sessionRoom}}
 @endforeach
 </body>
 </html>

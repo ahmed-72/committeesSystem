@@ -30,26 +30,26 @@
             <li>{{$message}}</li>
             @endforeach
         </ul>
-        @endif
+        @endif 
         @if(count($topics)>0)
         <form action="{{route('sessionConfirmation')}}" method="post">
             @csrf
             <div class="header">
-                @php $temp= $topics[0]; @endphp
-                <h5> &nbsp;تحضير جدول أعمال جلسة رقم   &nbsp; {{$temp->session_sessionID}}  &nbsp;  للجنة   &nbsp; {{$temp->committee->committeeName}}  &nbsp;  </h5>
-                <h5> بتاريخ :  &nbsp; {{$temp->session->sessionDate}} &nbsp; من الساعة: &nbsp; {{$temp->session->sessionStartAt}} &nbsp; إلى الساعة: &nbsp; {{$temp->session->sessionEndAt}} </h5>
+                
+                <h5> &nbsp;تحضير جدول أعمال جلسة رقم   &nbsp; {{$session->sessionID}}  &nbsp;  للجنة   &nbsp; {{$session->committee->committeeName}}  &nbsp;  </h5>
+                <h5> بتاريخ :  &nbsp; {{$session->sessionDate}} &nbsp; من الساعة: &nbsp; {{$session->sessionStartAt}} &nbsp; إلى الساعة: &nbsp; {{$session->sessionEndAt}} </h5>
                 <hr class="col-8">
 
                 <h5 class="input-group mb-3" style="display:none">
                     <span class="input-group-text">تحضير جدول أعمال جلسة رقم </span>
                     <input type="text" class="form-control someInput" readonly name="sessionID"
-                        value="{{$temp->session_sessionID}}">
+                        value="{{$session->sessionID}}">
                     <span class="input-group-text">للجنة</span>
                     <input class="form-control someInput" readonly name="committeeName"
-                        value="{{$temp->committee->committeeName}}">
+                        value="{{$session->committee->committeeName}}">
                     <span class="input-group-text">رقم</span>
                     <input class="form-control someInput" readonly name="committeeID"
-                        value="{{$temp->committee->committeeID}}">
+                        value="{{$session->committee_committeeID}}">
                 </h5>
             </div>
 
@@ -63,7 +63,7 @@
                             <th>جهة التنسيب</th>
                             <th>مشروع القرار المقترح</th>
                             <th>حالة البند</th>
-                            <th>اختيار &nbsp; <input type="button" id="selectAll" class="main btn btn-info " value="اختيار الكل"> </th>
+                            <th>اختيار &nbsp; <input type="button" id="selectAll" class="main btn btn-info " value="تحديد الكل"> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,23 +91,23 @@
                     <div class=" mb-2">
                         <label class="d-inline-block" for="SessionDate">التاريخ</label>
                         <input type="date" class="form-control" name="SessionDate"
-                            value="{{$temp->session->sessionDate}}">
+                            value="{{$session->sessionDate}}">
 
                     </div>
                     <div class=" mb-2">
                         <label class="d-inline" for="SessionTimeStart">من الساعة </label>
                         <input type="time" class="form-control d-inline " name="SessionTimeStart"
-                            value="{{$temp->session->sessionEndAt}}">
+                            value="{{$session->sessionEndAt}}">
                     </div>
                     <div class=" mb-2">
                         <label class="d-inline" for="SessionTimeEnd">إلى الساعة</label>
                         <input type="time" class="form-control d-inline " name="SessionTimeEnd"
-                            value="{{$temp->session->sessionStartAt}}">
+                            value="{{$session->sessionStartAt}}">
                     </div>
                     <div class="mb-2">
                         <label class="d-inline-block" for="SessionPlace">المكان</label>
                         <input type="text" class="form-control d-inline-block" name="SessionPlace" placeholder="المكان"
-                            value="{{$temp->session->sessionRoom}}">
+                            value="{{$session->sessionRoom}}">
                     </div>
                 </div>
                 <!-- submit -->
@@ -143,10 +143,10 @@ radioButtons.forEach(radio => {
   $('body').on('click', '#selectAll', function () {
     if ($(this).hasClass('allChecked')) {
         $('input[type="checkbox"]', '#topics').prop('checked', false);
-        document.getElementById('selectAll').value="اختيار الكل" ; 
+        document.getElementById('selectAll').value="تحديد الكل" ; 
     } else {
         $('input[type="checkbox"]', '#topics').prop('checked', true);
-        document.getElementById('selectAll').value="إزالة الكل" ; 
+        document.getElementById('selectAll').value="إلغاء التحديد" ; 
 
     }
     $(this).toggleClass('allChecked');

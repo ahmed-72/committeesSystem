@@ -11,6 +11,7 @@ use App\Models\session;
 use App\Models\sessionmember;
 use App\Models\sessiontopic;
 use App\Models\User;
+use App\Notifications\sessionNotification;
 use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,11 +26,13 @@ class sessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($committeeID)
     {
-        $userID = 20105025;
-        $committees=member::where('employee_employeeID',$userID)->with('committee')->get();
-        return view('pages/sessions/showSessions')->with('committees',$committees);
+        $session = session::where('committee_committeeID', $committeeID)->first();
+        $this->authorize('member', $session);
+
+        $sessions=session::where('committee_committeeID', $committeeID)->get();
+        return view('pages/sessions/showSessions')->with('sessions',$sessions);
     }
 
     /**
@@ -37,11 +40,14 @@ class sessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($committeeID)
     {
-        $committees = committee::select('committeeID', 'committeeName')->get();
-        //  dd($committees->toArray());
-        return view('pages/sessions/addSession')->with('committees', $committees);
+        $session = session::where('committee_committeeID', $committeeID)->first();
+        $this->authorize('chief', $session);
+     
+        $committee = committee::where('committeeID',$committeeID)->select('committeeID', 'committeeName')->first();
+         // dd($committee->toArray());
+        return view('pages/sessions/addSession')->with('committee', $committee);
     }
 
     /**
@@ -52,7 +58,10 @@ class sessionController extends Controller
      */
     public function store(sessionRequest $request)
     {
-
+        $session = session::where('committee_committeeID', $request['committeeID'])->first();
+        $this->authorize('member', $session);
+        
+       
         $committeeID = $request['committeeID'];
         $sessionNum = session::where('committee_committeeID', $committeeID)->get();
         $sessionID = count($sessionNum) + 1;
@@ -82,8 +91,6 @@ class sessionController extends Controller
         return view('pages/sessions/showSessionTopics')->with('topics', $topics);
     }
 
-
-
     /**
      * prepareSession
      *
@@ -92,10 +99,14 @@ class sessionController extends Controller
      */
     public function prepareSession($committeeID, $sessionID)
     {
-        $topics = discussiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->with('committee')->with('session')->with('employee')->get();
+        $session = session::where('committee_committeeID', $committeeID)->first();
+        $this->authorize('chief', $session);
+        
+        $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('committee')->with('session')->with('employee')->get();
+        $session=session::where(['committee_committeeID' => $committeeID,'sessionID'=>$sessionID])->with('committee')->first();
         $date = date('Y-m-d');
         //dd($topics->toArray());
-        return view('pages/sessions/prepareSession')->with('topics', $topics)->with('date', $date);
+        return view('pages/sessions/prepareSession')->with(['topics'=> $topics ,'session'=>$session])->with('date', $date);
     }
 
     /**
@@ -104,6 +115,8 @@ class sessionController extends Controller
      */
     public function sessionConfirmation(Request $request)
     {
+        $session = session::where('committee_committeeID',$request['committeeID'])->first();
+        $this->authorize('chief', $session);
         // dd($request->all()); 
         $request->validate(
             [
@@ -140,13 +153,14 @@ class sessionController extends Controller
             $session->save();
         }
 
-        //send sms
+        //send notification
+        $session = session::where(['sessionID' => $request['sessionID'], 'committee_committeeID' => $request['committeeID']])->with('committee')->first();
+
         $employees = member::where('committee_committeeID', $request['committeeID'])->with('employee')->get();
-        $employeesPhones = array();
-        $count = 0;
+       
         foreach ($employees as $employee) {
-            $employeesPhones[$count] = $employee->employee->employeePhone;
-            $count++;
+            $user=User::where('employeeID',$employee->employee_employeeID)->first();
+            $user->notify(new sessionNotification($session));
         }
         // dd($employeesPhones); send sms foe all member in this array
 
@@ -160,6 +174,9 @@ class sessionController extends Controller
      **/
     public function sessionReport_create($committeeID, $sessionID)
     {
+        $session = session::where('committee_committeeID',$committeeID)->first();
+        $this->authorize('chief', $session);
+
         $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
         $members = member::where('committee_committeeID', $committeeID)->orderBy('memberID', 'ASC')->with('employee')->get();
         $topics = sessionTopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->with('committee')->with('discussiontopic')->get();
@@ -180,6 +197,9 @@ class sessionController extends Controller
      **/
     public function sessionReport_store(Request $request)
     {
+        $session = session::where('committee_committeeID',$request['committeeID'])->first();
+        $this->authorize('chief', $session);
+
         // dd($request->all());
         $membersCount = count($request['memberID']);
         $topicsCount = count($request['topicID']);
@@ -211,7 +231,7 @@ class sessionController extends Controller
             'tracking.*.required'  => 'يجب تحديد حالة متابعة لجميع البنود',
 
         ]);
-/* شغال
+     /* شغال
             sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->update([
                 'deliberations' => $request['deliberation'][$topicID],
                 'decisions' => $request['decision'][$topicID],

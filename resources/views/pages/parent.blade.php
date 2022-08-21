@@ -139,4 +139,6 @@
 <!--end::Javascript-->
 </body>
 <!--end::Body-->
+@yield('scripts')
+
 </html>

@@ -16,7 +16,7 @@ class committee extends Model
         return $this->hasMany('App\Models\task');
     }
     public function sessions(){
-        return $this->hasMany('App\Models\session');
+        return $this->hasMany('App\Models\session')->orderBy('sessionDate', 'ASC');
     }
     public function regulations(){
         return $this->hasMany('App\Models\regulation');

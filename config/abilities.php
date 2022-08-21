@@ -15,7 +15,7 @@ return [
     'session.edit' => 'Edit Session',
     'session.delete' => 'Delete Session',
 
-    'role.view' => 'View Roles',
+    'role.view' => 'View Roles', 
     'role.add' => 'Add New Role',
     'role.edit' => 'Edit Role',
     'role.delete' => 'Delete Role',

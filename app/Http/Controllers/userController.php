@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\employee;
+use App\Models\role;
+use App\Models\roleUser;
 use App\Models\User;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
@@ -16,7 +18,8 @@ class userController extends Controller
   public function create()
   {
     $employees=employee::all();
-    return view('pages/users/addUser')->with('employees',$employees);
+    $roles=role::all();
+    return view('pages/users/addUser')->with(['employees'=>$employees , 'roles'=>$roles]);
   }
   public function store(Request $request)
   {
@@ -48,8 +51,11 @@ class userController extends Controller
     $user->avatar = $avatar;
     $user->save();
 
+    $roleUser=new roleUser();
+    $roleUser->role_id =$request['role_id'] ;
+    $roleUser->role_id =$user->id ;
     $status = 1;
-
+dd($user->id);
     return redirect(route('showUsers'))->with('AddStatus', $status);
   }
 

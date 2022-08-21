@@ -34,11 +34,34 @@ class CommitteeController extends Controller
         // if( Gate::denies('committee.view')){
         //     abort(403);
         // }
-        Gate::authorize('committee.view');
-        // $sessions=session::with('committee')->get(); 
-        $committees = committee::withoutTrashed()->where('status', 'active')->with('tasks')->with('regulations')->with('members')->with('sessions')->get();
+        // Gate::authorize('committee.view');
+
+        $this->authorize('viewAny', committee::class);
+
+        $committees = committee::withoutTrashed()->where(['status' => 'active'])->with('tasks')->with('regulations')->with('members')->with('sessions')->get();
+        $myCommittees = array();
+        $userID = Auth::user()->employeeID;
+        foreach ($committees as $committee) {
+            foreach ($committee->members as $member) {
+                if ($member->employee_employeeID == $userID) {
+                    $myCommittees[] = $committee;
+                }
+            }
+        }
+        // dd($myCommittees);
         $members = member::with('employee')->get();
-        // dd($committees->toArray());
+
+        return  view('pages/committees/showCommittees')->with('committees', $myCommittees)->with('members', $members);
+    }
+
+    public function indexAll()
+    {
+
+        $committees = committee::withoutTrashed()->where(['status' => 'active'])->with('tasks')->with('regulations')->with('members')->with('sessions')->get();
+
+        // dd($myCommittees);
+        $members = member::with('employee')->get();
+
         return  view('pages/committees/showCommittees')->with('committees', $committees)->with('members', $members);
     }
 
@@ -236,18 +259,81 @@ class CommitteeController extends Controller
      */
     public function show($committeeID)
     {
-        Gate::authorize('committee.view');
+        //Gate::authorize('committee.view');
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('view', $committee);
+
         $today = date('Y-m-d');
-        $afterThreeDays=date('Y-m-d',strtotime('+3 days'));
-        $sessions=session::where('sessionDate','>',$today)->where('sessionDate','<',$afterThreeDays)->get();
-        foreach($sessions as $session){
-            $session->status='inProgress';
+        $afterThreeDays = date('Y-m-d', strtotime('+3 days'));
+        $beforThreeDays = date('Y-m-d', strtotime('-3 days'));
+
+        $sessions = session::where('sessionDate', '>', $today)->where('sessionDate', '<', $afterThreeDays)->get();
+        foreach ($sessions as $session) {
+            $session->status = 'inProgress';
             $session->save();
         }
-        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics')->first();
-        return view('pages/committees/committee')->with('committee', $committee);
-    }
 
+        $oldSessions = session::where('sessionDate', '<', $today)->get();
+        foreach ($oldSessions as $oldSession) {
+            $oldSession->status = 'dead';
+            $oldSession->save();
+        }
+
+        $todaySessions = session::where('sessionDate', '=', $today)->get();
+        foreach ($todaySessions as $todaySessions) {
+            $todaySessions->status = 'ready';
+            $todaySessions->save();
+        }
+
+        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics')->first();
+        $sessions = $committee->sessions;
+        $nearSessions = array();
+        foreach ($sessions as $session) {
+            if ( $session->sessionDate <= $afterThreeDays && $session->sessionDate >= $beforThreeDays) {
+                $nearSessions[] = $session;
+            }
+        }
+        return view('pages/committees/committee')->with(['committee'=> $committee ,'nearSessions'=>$nearSessions]);
+    }
+    public function newShow($committeeID)
+    {
+        //Gate::authorize('committee.view');
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('view', $committee);
+
+        $today = date('Y-m-d');
+        $afterThreeDays = date('Y-m-d', strtotime('+3 days'));
+        $beforThreeDays = date('Y-m-d', strtotime('-3 days'));
+
+        $sessions = session::where('sessionDate', '>', $today)->where('sessionDate', '<', $afterThreeDays)->get();
+        foreach ($sessions as $session) {
+            $session->status = 'inProgress';
+            $session->save();
+        }
+
+        $oldSessions = session::where('sessionDate', '<', $today)->get();
+        foreach ($oldSessions as $oldSession) {
+            $oldSession->status = 'dead';
+            $oldSession->save();
+        }
+
+        $todaySessions = session::where('sessionDate', '=', $today)->get();
+        foreach ($todaySessions as $todaySessions) {
+            $todaySessions->status = 'ready';
+            $todaySessions->save();
+        }
+
+        $committee = committee::where('committeeID', $committeeID)->with('sessions', 'members', 'regulations', 'tasks', 'sessiontopics')->first();
+        $sessions = $committee->sessions;
+        $nearSessions = array();
+        foreach ($sessions as $session) {
+            if ( $session->sessionDate <= $afterThreeDays && $session->sessionDate >= $beforThreeDays) {
+                $nearSessions[] = $session;
+            }
+        }
+        return view('pages/committees/committee-details')->with(['committee'=> $committee ,'nearSessions'=>$nearSessions]);
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -256,9 +342,11 @@ class CommitteeController extends Controller
      */
     public function edit($committeeID)
     {
-        Gate::authorize('committee.edit');
-
+        // Gate::authorize('committee.edit');
         $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('update', $committee);
+
+
         $employees = employee::get();
         $members = member::where('committee_committeeID', $committeeID)->with('employee')->get();
         $tasks = task::where('committee_committeeID', $committeeID)->get();
@@ -285,26 +373,27 @@ class CommitteeController extends Controller
      */
     public function update(Request $request, $committeeID)
     {
-        Gate::authorize('committee.edit');
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('update', $committee);
 
         // dd($request->all());
-        if($request["membersGroup"][0]['memberName']!=null){ 
-        $test=1;
-        for ($i = 0; $i < count($request["membersGroup"]); $i++) {
-            $employeeID=employee::where('employeeName',$request["membersGroup"][$i]["memberName"])->first();
-            $member = member::where('committee_committeeID' , $committeeID)->where('employee_employeeID' , $employeeID->employeeID)->first();
-            if ($member != null ) $test=0; 
+        if ($request["membersGroup"][0]['memberName'] != null) {
+            $test = 1;
+            for ($i = 0; $i < count($request["membersGroup"]); $i++) {
+                $employeeID = employee::where('employeeName', $request["membersGroup"][$i]["memberName"])->first();
+                $member = member::where('committee_committeeID', $committeeID)->where('employee_employeeID', $employeeID->employeeID)->first();
+                if ($member != null) $test = 0;
+            }
+            $request->request->add(['memberID' => $test]);
+
+            $request->validate([
+                'commName' => ['required'],
+                'membersGroup.*.memberDescription' => ['required_with:membersGroup.*.memberName'],
+                'memberID' => ['accepted'],
+            ], [
+                'memberID.accepted' => 'هذا العضو مضاف فعلاً'
+            ]);
         }
-        $request->request->add(['memberID' => $test]);
-    
-        $request->validate([
-            'commName' => ['required'],
-            'membersGroup.*.memberDescription' => ['required_with:membersGroup.*.memberName'],
-            'memberID' => ['accepted'],
-        ], [
-            'memberID.accepted' => 'هذا العضو مضاف فعلاً'
-        ]);
-    }
 
 
         $committeeName = $request['commName'];
@@ -395,7 +484,7 @@ class CommitteeController extends Controller
                 $regulation->save();
             }
         }
-        return redirect()->route('committee',$committeeID);
+        return redirect()->route('committee', $committeeID);
     }
 
     /**
@@ -405,11 +494,14 @@ class CommitteeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function deleteMember($employeeID, $committeeID ,$memberID)
-    { 
-        $member = DB::table('members')->where(['committee_committeeID'=> $committeeID ,'employee_employeeID'=> $employeeID ,'memberID'=>$memberID])->delete();
+    public function deleteMember($employeeID, $committeeID, $memberID)
+    {
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('update', $committee);
 
-       // $member->forceDelete();
+        $member = DB::table('members')->where(['committee_committeeID' => $committeeID, 'employee_employeeID' => $employeeID, 'memberID' => $memberID])->delete();
+
+        // $member->forceDelete();
 
         $members = member::where('memberID', '>', $memberID)->where('committee_committeeID', $committeeID)->get();
         $temp = $memberID;
@@ -423,6 +515,9 @@ class CommitteeController extends Controller
 
     public function deleteTask($taskID, $committeeID)
     {
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('update', $committee);
+
 
         $task = task::where('taskID', $taskID)->where('committee_committeeID', $committeeID)->first();
         $task->delete();
@@ -439,6 +534,9 @@ class CommitteeController extends Controller
 
     public function deleteRegulation($regulationID, $committeeID)
     {
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('update', $committee);
+
         $regulation = regulation::where(['regulationID' => $regulationID, 'committee_committeeID' => $committeeID])->first();
         $regulation->delete();
 
@@ -461,20 +559,26 @@ class CommitteeController extends Controller
      */
     public function createTopics($committeeID)
     {
-        $user=Auth::user();
-        $userID =$user->employeeID;
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('topic', $committee);
+
+        $user = Auth::user();
+        $userID = $user->employeeID;
         //$userID = 20105025;
-        $committee =member::select('committee_committeeID')->where('employee_employeeID', $userID)->where('committee_committeeID',$committeeID)->first();
-       if($committee !=null){
-       $committee=committee::where('committeeID',$committeeID)->first();
-        return view('pages/sessions/addDiscussionTopics')->with('committee', $committee);}
-        else return view('pages/sessions/addDiscussionTopics')->with('fail','fail');
+        $committee = member::select('committee_committeeID')->where('employee_employeeID', $userID)->where('committee_committeeID', $committeeID)->first();
+        if ($committee != null) {
+            $committee = committee::where('committeeID', $committeeID)->first();
+            return view('pages/sessions/addDiscussionTopics')->with('committee', $committee);
+        } else return view('pages/sessions/addDiscussionTopics')->with('fail', 'fail');
     }
 
     public function storeTopics(Request $request)
     {
-        $user=Auth::user();
-        $userID =$user->employeeID;
+        $committee = committee::where('committeeID', $request['committeeID'])->first();
+        $this->authorize('topic', $committee);
+
+        $user = Auth::user();
+        $userID = $user->employeeID;
 
         // dd($request->all());
         //check if this committee has one session at least or not yet
@@ -549,7 +653,8 @@ class CommitteeController extends Controller
      */
     public function destroy($committeeID)
     {
-        Gate::authorize('committee.delete');
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('delete', $committee);
 
         committee::where('committeeID', $committeeID)->update(['status' => 'deactivated',]);
         committee::where('committeeID', $committeeID)->delete();
@@ -577,6 +682,10 @@ class CommitteeController extends Controller
     public function restore($committeeID)
     {
         committee::where('committeeID', $committeeID)->restore();
+
+        $committee = committee::where('committeeID', $committeeID)->first();
+        $this->authorize('delete', $committee);
+
         member::where('committee_committeeID', $committeeID)->restore();
         session::where('committee_committeeID', $committeeID)->restore();
         task::where('committee_committeeID', $committeeID)->restore();

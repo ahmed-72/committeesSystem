@@ -44,6 +44,11 @@ class roleUserController extends Controller
     {
            //dd($request->all());
            $roleUser = roleUser::create($request->all());
+           $role=role::findorfail($request['role_id']);
+           $roleName=$role->name;
+           $user=User::findorfail($request['user_id']);
+           $user->type="$roleName";
+           $user->save();
            return redirect()->route('roles.index')->with('success', 'تمت الإضافة بنجاح');
     }
 

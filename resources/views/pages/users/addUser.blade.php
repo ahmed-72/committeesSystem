@@ -52,6 +52,13 @@
             @endforeach
         </select>
         <input class="form-control bg-transparent px-15" type="file" name="image" id="image"><br> 
+        <label>select a role</label>
+    <select class="form-control bg-transparent px-15" name="role_id">
+        <option value=""></option>
+        @foreach($roles as $role)
+        <option value="{{$role->id}}">{{$role->name}}</option>
+ @endforeach
+ </select>
         <input type="submit" class="btn btn-sm fw-bold btn-primary " id="submit" value="Add">
     </form>
 </div>

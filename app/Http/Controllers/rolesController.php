@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\returnSelf;
 
 class rolesController extends Controller
 {
@@ -20,6 +19,7 @@ class rolesController extends Controller
     public function index()
     {
         //  Gate::authorize('role.view');
+        $this->authorize('viewAny',role::class);
 
         $roles = role::all();
         return view('pages/roles/viewRole')->with('roles', $roles);
@@ -32,8 +32,8 @@ class rolesController extends Controller
      */
     public function create()
     {
-        Gate::authorize('role.add');
-
+        $this->authorize('create',role::class);
+    
         return view('pages/roles/createRole', ['role' => new role,]);
     }
 
@@ -45,6 +45,8 @@ class rolesController extends Controller
      */
     public function store(Request $request)
     { //dd($request->all());
+        $this->authorize('create',role::class);
+
         $request->validate([
             'name' => ['required', 'string'],
             'abilities' => ['required', 'array']
@@ -76,6 +78,9 @@ class rolesController extends Controller
     public function edit($id)
     {
         $role = role::findOrFail($id);
+
+        $this->authorize('update',$role);
+
         return view('pages/roles/updateRole')->with('role', $role);
     }
 
@@ -88,6 +93,7 @@ class rolesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $request->validate([
             'name' => ['required', 'string'],
             'abilities' => ['required', 'array']
@@ -96,6 +102,9 @@ class rolesController extends Controller
             'abilities.required' => 'اختر الصلاحيات المطلوبة'
         ]);
         $role = role::findOrFail($id);
+
+        $this->authorize('update',$role);
+
 
         $role->update($request->all());
         return redirect()->route('roles.index')->with('success', 'تم التعديل بنجاح');
@@ -109,7 +118,8 @@ class rolesController extends Controller
      */
     public function destroy($id)
     {
-        Gate::authorize('role.delete');
+        $role = role::findOrFail($id);
+        $this->authorize('delete',$role);
 
         role::destroy($id);
         return redirect()->route('roles.index')->with('success', 'تم الحذف بنجاح');

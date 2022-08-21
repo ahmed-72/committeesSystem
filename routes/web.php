@@ -48,10 +48,12 @@ Route::put('/updateUser/{id}',[userController::class,'update'] )->middleware('au
 Route::middleware(['auth',])->group(function () {
     
 //committee
+Route::get('/allCommittees',[committeeController::class,'indexAll'] )->middleware('user.type:super-admin');
+
 Route::get('/addCommittee',[committeeController::class,'create'] );
 Route::post('/addCommittee',[committeeController::class,'store'] )->name('addCommittee.store');
 
-Route::get('/showCommittees',[committeeController::class,'index'] )->middleware('user.type:super-admin')->name('showCommittee');
+Route::get('/showCommittees',[committeeController::class,'index'] )->name('showCommittee');
 
 Route::get('/committee/{committeeID}',[committeeController::class,'show'] )->name('committee');
 
@@ -62,10 +64,10 @@ Route::put('/updateCommittees/{committeeID}',[committeeController::class,'update
 Route::get('/deleteCommittee/{committeeID}',[committeeController::class,'destroy'])->name('deletecommittee');
 
 //sessions
-Route::get('/addSession',[sessionController::class,'create'] );
+Route::get('/addSession/{committeeID}',[sessionController::class,'create'] )->name('addSession.create');
 Route::post('/addSession',[sessionController::class,'store'] )->name('addSession.store');
 
-Route::get('/showSessions',[sessionController::class,'index'] );
+Route::get('/showSessions/{committeeID}',[sessionController::class,'index'] )->name('showSessions');
 
 
 //deletes on update blade
@@ -115,4 +117,7 @@ Route::get('/printReport/{sessionID}', function () {
 Route::get('/create', function () {
     return view('pages/committees/create');
 });
+
+
+Route::get('/committeeDetails/{committeeID}',[committeeController::class,'nawShow'] );
 
