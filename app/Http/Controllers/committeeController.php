@@ -38,9 +38,9 @@ class CommitteeController extends Controller
 
         $this->authorize('viewAny', committee::class);
 
-        $committees = committee::withoutTrashed()->where(['status' => 'active'])->with('tasks')->with('regulations')->with('members')->with('sessions')->get();
+        $committees = committee::withoutTrashed()->where(['status' => 'active'])->with('tasks')->with('regulations')->with('members')->with('sessions','discussiontopics')->get();
         $myCommittees = array();
-        $userID = Auth::user()->employeeID;
+        $userID = Auth::user()->employee_employeeID;
         foreach ($committees as $committee) {
             foreach ($committee->members as $member) {
                 if ($member->employee_employeeID == $userID) {
@@ -48,7 +48,7 @@ class CommitteeController extends Controller
                 }
             }
         }
-        // dd($myCommittees);
+        // dd($userID);
         $members = member::with('employee')->get();
 
         return  view('pages/committees/showCommittees')->with('committees', $myCommittees)->with('members', $members);
@@ -565,7 +565,7 @@ class CommitteeController extends Controller
         $this->authorize('topic', $committee);
 
         $user = Auth::user();
-        $userID = $user->employeeID;
+        $userID = $user->employee_employeeID;
        
         $committee = committee::where('committeeID', $committeeID)->first();
             return view('pages/sessions/addDiscussionTopics')->with('committee', $committee);
@@ -582,7 +582,7 @@ class CommitteeController extends Controller
         $this->authorize('topic', $committee);
 
         $user = Auth::user();
-        $userID = $user->employeeID;
+        $userID = $user->employee_employeeID;
 
         // dd($request->all());
         //check if this committee has one session at least or not yet

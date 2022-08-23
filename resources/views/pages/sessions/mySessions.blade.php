@@ -102,21 +102,21 @@
                                                 elseif (str_contains($created_at, 'week')&& $number=='1 ') 
                                                 $created_at='أسبوعٍ مضى'; 
                                                 elseif (str_contains($created_at, 'weeks')&& $number=='2 ') 
-                                                $created_at=$number.'أسبوعين مضيا';
+                                                $created_at='أسبوعين مضيا';
                                                 elseif (str_contains($created_at, 'weeks')&& $number!='1 '&& $number!='2 ') 
                                                 $created_at=$number.'أسابيعٍ مضت';
 
                                                 elseif (str_contains($created_at, 'month')&& $number=='1 ') 
                                                 $created_at='شهرٍ مضى'; 
                                                 elseif (str_contains($created_at, 'months')&& $number=='2 ') 
-                                                $created_at=$number.'شهرين مضيا';
+                                                $created_at='شهرين مضيا';
                                                 elseif (str_contains($created_at, 'months')&& $number!='1 '&& $number!='2 ') 
                                                 $created_at=$number.'أشهرٍ مضت';
                                                 
                                                 elseif (str_contains($created_at, 'year')&& $number=='1 ') 
                                                 $created_at='سنةٍ مضى'; 
                                                 elseif (str_contains($created_at, 'years')&& $number=='2 ') 
-                                                $created_at=$number.'سنتين مضتا';
+                                                $created_at='سنتين مضتا';
                                                 elseif (str_contains($created_at, 'years')&& $number!='1 '&& $number!='2 ') 
                                                 $created_at=$number.'سنينٍ مضت';
 
@@ -210,27 +210,27 @@
                                                 elseif (str_contains($created_at, 'week')&& $number=='1 ') 
                                                 $created_at='أسبوعٍ مضى'; 
                                                 elseif (str_contains($created_at, 'weeks')&& $number=='2 ') 
-                                                $created_at=$number.'أسبوعين مضيا';
+                                                $created_at='أسبوعين مضيا';
                                                 elseif (str_contains($created_at, 'weeks')&& $number!='1 '&& $number!='2 ') 
                                                 $created_at=$number.'أسابيعٍ مضت';
 
                                                 elseif (str_contains($created_at, 'month')&& $number=='1 ') 
                                                 $created_at='شهرٍ مضى'; 
                                                 elseif (str_contains($created_at, 'months')&& $number=='2 ') 
-                                                $created_at=$number.'شهرين مضيا';
+                                                $created_at='شهرين مضيا';
                                                 elseif (str_contains($created_at, 'months')&& $number!='1 '&& $number!='2 ') 
                                                 $created_at=$number.'أشهرٍ مضت';
                                                 
                                                 elseif (str_contains($created_at, 'year')&& $number=='1 ') 
                                                 $created_at='سنةٍ مضى'; 
                                                 elseif (str_contains($created_at, 'years')&& $number=='2 ') 
-                                                $created_at=$number.'سنتين مضتا';
+                                                $created_at='سنتين مضتا';
                                                 elseif (str_contains($created_at, 'years')&& $number!='1 '&& $number!='2 ') 
                                                 $created_at=$number.'سنينٍ مضت';
 
                                                 ?>
                                                 <div class="fw-semibold text-gray-400 mb-6"> جلسة رقم
-                                                    {{$upcomingSession->sessionID}} أنشئت قبل {{$created_at}}</div>
+                                                    {{$previousSession->sessionID}} أنشئت قبل {{$created_at}}</div>
                                                 <!--end::Position-->
                                                 <!--begin::Info-->
                                                 <div class="d-flex flex-center flex-wrap">

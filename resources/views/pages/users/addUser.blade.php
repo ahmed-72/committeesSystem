@@ -23,10 +23,10 @@
 
 @section('content')
 <div class="card-body pt-9 pb-0">
-@if(session()->has('AddStatus'))
+    @if(session()->has('AddStatus'))
     @if(session('AddStatus'))
-    <div class="mb-2 alert alert-success">user added successfully 
-    <img src="https://www.svgrepo.com/show/13650/success.svg" alt="Icon Success"style="width: 20px;height: 20px;">
+    <div class="mb-2 alert alert-success">user added successfully
+        <img src="https://www.svgrepo.com/show/13650/success.svg" alt="Icon Success" style="width: 20px;height: 20px;">
     </div>
     @endif
     @endif
@@ -39,28 +39,59 @@
         @endforeach
     </ul>
     @endif
-    <form class="form" enctype="multipart/form-data" action="{{route('addUser.store')}}" method="post">
-        @csrf
-        <input class="form-control bg-transparent px-15" type="text" placeholder="Name" name="name" id="name"><br>
-        <input class="form-control bg-transparent px-15" type="email" placeholder="Email" name="email"><br>
-        <input class="form-control bg-transparent px-15" type="password" placeholder="Password" name="password"><br>
-        <input class="form-control bg-transparent px-15" type="password" placeholder="confirm Password" name="password_confirmation"><br>
-        <select class="form-control bg-transparent px-15" name="employeeID" id="employeeID">
-        <option value="" disabled selected hidden>select an employee as(employee Id -- employee Name)</option>
-            @foreach($employees as $employee)
-            <option value="{{$employee->employeeID}}">{{$employee->employeeID}}--{{$employee->employeeName}}</option>
-            @endforeach
-        </select>
-        <input class="form-control bg-transparent px-15" type="file" name="image" id="image"><br> 
-        <label>select a role</label>
-    <select class="form-control bg-transparent px-15" name="role_id">
-        <option value=""></option>
-        @foreach($roles as $role)
-        <option value="{{$role->id}}">{{$role->name}}</option>
- @endforeach
- </select>
-        <input type="submit" class="btn btn-sm fw-bold btn-primary " id="submit" value="Add">
-    </form>
+    <!--begin::Row-->
+    <div class="row g-6 g-xl-9">
+        <!--begin::Col-->
+        <div class="col-10 col-xxl-4">
+            <!--begin::Card-->
+            <div class="card shadow-sm card-bordered">
+                <!--begin::Card body-->
+                <div class="card-body d-flex flex-center flex-column pt-12 p-9">
+                    <h3>إضافة مستخدم جديد</h3>
+                    <form class="form col-7" enctype="multipart/form-data" action="{{route('addUser.store')}}"
+                        method="post">
+                        @csrf
+                        <input class="form-control bg-transparent " type="text" placeholder="الاسم"
+                            name="name" id="name"><br>
+                        <input class="form-control bg-transparent " type="email" placeholder="الايميل"
+                            name="email"><br>
+                        <input class="form-control bg-transparent " type="password" placeholder="كلمة السر"
+                            name="password"><br>
+                        <input class="form-control bg-transparent " type="password"
+                            placeholder="تأكيد كلمة السر" name="password_confirmation"><br>
+                        <select class="form-control bg-transparent " name="employeeID" id="employeeID">
+                            <option value="" disabled selected hidden>اختر الموظف</option>
+                            @foreach($employees as $employee)
+                            <option value="{{$employee->employeeID}}">
+                                {{$employee->employeeID}}--{{$employee->employeeName}}
+                            </option>
+                            @endforeach
+                        </select><br>
+                        <select class="form-control bg-transparent " name="role_id">
+                            <option value="" disabled selected hidden>اختر الصلاحية</option>
+
+                            <option value=""></option>
+                            @foreach($roles as $role)
+                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            @endforeach
+                        </select><br>
+                        <input type="submit" class="btn btn-sm fw-bold btn-primary mx-20 mb-5" id="submit" value="حفظ">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--begin::Col
+        <div class="col-md-6 col-xxl-4">
+            <!- -begin::Card-- >
+            <div class="card shadow-sm card-bordered">
+                <!- -begin::Card body- ->
+                <div class="card-body d-flex flex-center flex-column pt-12 p-9">
+                <img src="{{asset('assets/media/avatars/addUser.png')}}" alt="">
+                </div>
+            </div>
+        </div>-->
+    </div>
 </div>
 @endsection
 

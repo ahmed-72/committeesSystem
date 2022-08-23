@@ -42,7 +42,7 @@
                         <img src="{{asset('assets/media/auth/404-error-dark.png')}}"
                             class="mw-100 mh-300px theme-dark-show" alt="">
                     </div>
-                    <!--end::Illustration-->
+                    <!--end::Illustration--> 
                     <!--begin::Link-->
                     <div class="mb-0">
                         <a href="{{route('mainhome')}}" class="btn btn-sm btn-primary">عودة للصفحة الرئيسية</a>

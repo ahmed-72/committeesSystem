@@ -42,33 +42,32 @@ class sessionController extends Controller
     public function mySessions()
     {
         $this->authorize('view', session::class);
-        
 
-        $employeeID = Auth::user()->employeeID;
+
+        $employeeID = Auth::user()->employee_employeeID;
         $today = date('Y-m-d');
         $afterThreeDays = date('Y-m-d', strtotime('+3 days'));
         $beforThreeDays = date('Y-m-d', strtotime('-3 days'));
 
         $sessions = session::where('sessionDate', '>', $today)->where('sessionDate', '<', $afterThreeDays)->get();
-        
+
         $members = member::where('employee_employeeID', $employeeID)->with('employee', 'committee')->get();
         $previousSessions = array();
         $upcomingSessions = array();
 
         foreach ($members as $member) {
-            $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate','<',$today)->orderBy('sessionDate')->with('committee')->get();
+            $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate', '<', $today)->orderBy('sessionDate')->with('committee')->get();
             foreach ($temps as $temp) {
                 $previousSessions[] = $temp;
             }
-            $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate','>=',$today)->orderBy('sessionDate')->with('committee')->get();
+            $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate', '>=', $today)->orderBy('sessionDate')->with('committee')->get();
             foreach ($temps as $temp) {
                 $upcomingSessions[] = $temp;
             }
             $temps = [];
         }
-       
 
-        return view('pages/sessions/mySessions')->with(['previousSessions'=>$previousSessions,'upcomingSessions'=>$upcomingSessions]);
+        return view('pages/sessions/mySessions')->with(['previousSessions' => $previousSessions, 'upcomingSessions' => $upcomingSessions]);
     }
 
     /**
@@ -122,7 +121,7 @@ class sessionController extends Controller
      */
     public function showSessionTopics($committeeID)
     {
-        $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('employee','committee')->get();
+        $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('employee', 'committee')->get();
         //  dd($topics->toArray());
         return view('pages/sessions/showSessionTopics')->with('topics', $topics);
     }
@@ -221,8 +220,15 @@ class sessionController extends Controller
             $topicDetails[$topic->discussiontopic_topicID] = discussiontopic::where('topicID', $topic->discussiontopic_topicID)->get();
             $count++;
         }
-        // dd($topicDetails);
-        return view('pages/sessions/sessionReport')->with(['session' => $session, 'members' => $members, 'topics' => $topics, 'topicDetails' => $topicDetails]);
+        // dd($session->status);
+        if ($session->status == 'ready') {
+            $notReady = 0;
+            return view('pages/sessions/sessionReport')->with(['session' => $session, 'members' => $members, 'topics' => $topics, 'topicDetails' => $topicDetails, 'notReady' => $notReady]);
+        } else {
+            $notReady = 1;
+
+            return view('pages/sessions/sessionReport')->with(['notReady' => $notReady]);
+        }
     }
 
     /**
@@ -307,7 +313,7 @@ class sessionController extends Controller
             if ($attendee == 'attendant')  $sessionmember->attendee = 'حاضر';
             else if ($attendee == 'absent') $sessionmember->attendee = 'متغيب';
             else if ($attendee == 'apologized') $sessionmember->attendee = 'معتذر';
-            //  $sessionmember->save();
+              $sessionmember->save();
         }
         foreach ($request['tracking'] as $topicID => $status) {
 
@@ -315,10 +321,42 @@ class sessionController extends Controller
                 'isDiscussed' => $status,
             ]);
         }
+        session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->update(['status' => 'dead']);
+
 
         $user = Auth::user();
 
         return redirect()->back();
+    }
+
+
+
+
+    public function printReport($committeeID, $sessionID)
+    {
+        $session = session::where('committee_committeeID', $committeeID)->first();
+        $this->authorize('member', $session);
+        
+        $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
+        $members = sessionmember::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->orderBy('member_memberID', 'ASC')->with('member')->get();
+        //dd($members->member->employee->employeeName);
+        $topics = sessionTopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->with('committee')->with('discussiontopic')->get();
+        $topicDetails = array();
+        $count = 0;
+        foreach ($topics as $topic) {
+            $topicDetails[$topic->discussiontopic_topicID] = discussiontopic::where('topicID', $topic->discussiontopic_topicID)->get();
+            $count++;
+        }
+
+        if ($session->status == 'dead') {
+            $notReady = 0;
+           
+            return view('pages/sessions/printReport')->with(['session' => $session, 'members' => $members, 'topics' => $topics, 'topicDetails' => $topicDetails, 'notReady' => $notReady]);
+        } else {
+            $notReady = 1;
+
+            return view('pages/sessions/printReport')->with(['notReady' => $notReady]);
+        }
     }
 
 

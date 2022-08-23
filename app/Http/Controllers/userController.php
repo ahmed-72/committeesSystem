@@ -57,7 +57,6 @@ class userController extends Controller
     $roleUser->role_id =$request['role_id'] ;
     $roleUser->role_id =$user->id ;
     $status = 1;
-dd($user->id);
     return redirect(route('showUsers'))->with('AddStatus', $status);
   }
 
@@ -98,12 +97,17 @@ dd($user->id);
 
 
     return view('pages/users/showUsers', compact('users')); //->with('users',$users);
+   
+    
   }
 
   public function show($id)
   {
     $user = Auth::user();
-    return view('pages/users/userProfile')->with('user', $user);
+    $user=User::where('id',$user->id)->with('employee')->first();
+$committeeCount=member::where('employee_employeeID',$user->employee_employeeID)->count();
+
+    return view('pages/users/userProfile')->with(['user'=> $user,'committeeCount'=>$committeeCount]);
   }
 
 
@@ -150,7 +154,7 @@ home page
 */
   public function home(){
 
-    $employeeID = Auth::user()->employeeID;
+    $employeeID = Auth::user()->employee_employeeID;
     $today = date('Y-m-d');
         
     $members = member::where('employee_employeeID', $employeeID)->with('employee', 'committee')->get();

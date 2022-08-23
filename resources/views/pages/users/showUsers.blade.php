@@ -1,19 +1,14 @@
 @extends('pages.parent')
 
-@section('title','عرض المستخدمين')
+@section('title','Show Users')
 
-@section('page_name','المستخدمين')
+@section('page_name','Users')
 
-@section('main_path','المستخدمين')
-@section('sub_path','عرض المستخدمين')
+@section('main_path','users')
+@section('sub_path','show users')
 
 
 @section('styles')
-    <style>
-        .app-toolbar {
-            direction: rtl;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -32,14 +27,13 @@
                             <!--begin::Engage widget 10-->
                             <div style="background-color: inherit" class="card card-flush h-md-100">
                                 <!--begin::Body-->
-                                <div class="card card-flush">
+                                <div class="card card-flush mt-6 mt-xl-9">
                                     <!--begin::Card header-->
-                                    <div dir="rtl" class="card-header mt-5">
+                                    <div class="card-header mt-5">
                                         <!--begin::Card title-->
                                         <div class="card-title flex-column">
-                                            <h3 class="fw-bold mb-1">معلومات المستخدين</h3>
-                                            <div class="fs-6 text-gray-400">الجدول يحتوي على جميع بيانات المستخدمين
-                                            </div>
+                                            <h3 class="fw-bold mb-1">Users Information</h3>
+                                            <div class="fs-6 text-gray-400">all users data from User table</div>
                                         </div>
                                         <!--begin::Card title-->
                                         <!--begin::Card toolbar-->
@@ -61,7 +55,7 @@
                                                         <button type="button" class="btn btn-primary"
                                                                 data-toggle="modal" data-target="#exampleModalCenter"
                                                                 id="createNewUser">
-                                                            اضافة مستخدم جديد
+                                                            Add New User
                                                         </button>
                                                         <div class="card-body py-3">
                                                             <!--begin::Table container-->
@@ -71,10 +65,15 @@
                                                                     class="table hover table-striped table-rounded table-row-bordered data-table">
                                                                     <thead>
                                                                     <tr class="fw-bold text-muted bg-light">
-                                                                        <th class="min-w-50px">الاعدادات</th>
-                                                                        <th class="min-w-150px">الايميل</th>
-                                                                        <th class="min-w-150px">اسم الموظف</th>
-                                                                        <th class="min-w-150px">اسم المستخدم</th>
+                                                                        <th style="padding-left: 20px"
+                                                                            class="min-w-10px">
+                                                                            Agent
+                                                                        </th>
+                                                                        <th class="min-w-150px">name</th>
+                                                                        <th class="min-w-150px">email</th>
+                                                                        {{--                                                                        <th class="min-w-100px">created_at</th>--}}
+                                                                        {{--                                                                        <th class="min-w-100px">updated_at</th>--}}
+                                                                        <th class="min-w-50px">settings</th>
                                                                     </tr>
                                                                     </thead>
                                                                 </table>
@@ -127,188 +126,7 @@
                                                                 <div class="modal-body">
                                                                     <div class="card-body pt-5">
                                                                         <!--begin::Form-->
-                                                                        <!--begin::Form-->
-                                                                    <form
-                                                                        class="form fv-plugins-bootstrap5 fv-plugins-framework"
-                                                                        id="create_user_form">
-                                                                        @csrf
-                                                                        <!--begin::Input group-->
-                                                                        <div class="mb-7">
-                                                                            <!--begin::Label-->
-                                                                            <label class="fs-6 fw-semibold mb-3">
-                                                                                <span>Add Photo</span>
-                                                                            </label>
-                                                                            <!--end::Label-->
-                                                                            <!--begin::Image input wrapper-->
-                                                                            <div class="mt-1">
-                                                                                <!--begin::Image placeholder-->
-                                                                                <!-- <style>
-                                                                                .image-input-placeholder { background-image: url( {{asset('assets/media/svg/files/blank-image.svg')}} )}
-
-                                                                                [data-theme="dark"] .image-input-placeholder {
-                                                                                    background-image: url({{asset('assets/media/svg/files/blank-image-dark.svg')}});}
-                                                                                </style> -->
-                                                                                <!--end::Image placeholder-->
-                                                                                <!--begin::Image input-->
-                                                                                <div class="image-input image-input-outline image-input-placeholder image-input-empty image-input-empty"
-                                                                                    data-kt-image-input="true">
-                                                                                    <!--begin::Preview existing avatar-->
-                                                                                    <div
-                                                                                        class="image-input-wrapper w-100px h-100px">
-                                                                                    </div>
-                                                                                    <!--end::Preview existing avatar-->
-                                                                                    <!--begin::Edit-->
-                                                                                    <label
-                                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                                        data-kt-image-input-action="change"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-kt-initialized="1">
-                                                                                        <i
-                                                                                            class="bi bi-pencil-fill fs-7"></i>
-                                                                                        <!--begin::Inputs-->
-                                                                                        <input id="image" name="image"
-                                                                                            type="file"
-                                                                                            accept=".png, .jpg, .jpeg">
-                                                                                        <input type="hidden"
-                                                                                            name="avatar_remove">
-                                                                                        <!--end::Inputs-->
-                                                                                    </label>
-                                                                                    <!--end::Edit-->
-                                                                                    <!--begin::Cancel-->
-                                                                                    <span
-                                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                                        data-kt-image-input-action="cancel"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-kt-initialized="1">
-                                                                                        <i class="bi bi-x fs-2"></i>
-                                                                                    </span>
-                                                                                    <!--end::Cancel-->
-                                                                                    <!--begin::Remove-->
-                                                                                    <span
-                                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                                        data-kt-image-input-action="remove"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-kt-initialized="1">
-                                                                                        <i class="bi bi-x fs-2"></i>
-                                                                                    </span>
-                                                                                    <!--end::Remove-->
-                                                                                </div>
-                                                                                <!--end::Image input-->
-                                                                            </div>
-                                                                            <!--end::Image input wrapper-->
-                                                                        </div>
-                                                                        <!--end::Input group-->
-                                                                        <!--begin::Row-->
-                                                                        <div
-                                                                            class="row row-cols-2 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                                            <!--begin::Input group-->
-                                                                            <div
-                                                                                class="fv-row mb-7 fv-plugins-icon-container">
-                                                                                <!--begin::Label-->
-                                                                                <label
-                                                                                    class="fs-6 fw-semibold form-label mt-3">
-                                                                                    <span class="required">Name</span>
-                                                                                </label>
-                                                                                <!--end::Label-->
-                                                                                <!--begin::Input-->
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control form-control-solid"
-                                                                                    id="name" value=""
-                                                                                    placeholder="Enter Name">
-                                                                                <!--end::Input-->
-                                                                                <div
-                                                                                    class="fv-plugins-message-container invalid-feedback">
-                                                                                </div>
-                                                                            </div>
-                                                                            <!--end::Input group-->
-                                                                        </div>
-                                                                        <!--end::Row-->
-                                                                        <!--begin::Input group-->
-                                                                        <div
-                                                                            class="fv-row mb-7 fv-plugins-icon-container">
-                                                                            <!--begin::Label-->
-                                                                            <label
-                                                                                class="fs-6 fw-semibold form-label mt-3">
-                                                                                <span class="required">Email</span>
-                                                                            </label>
-                                                                            <!--end::Label-->
-                                                                            <!--begin::Input-->
-                                                                            <input id="email" type="email" name="email"
-                                                                                class="form-control form-control-solid"
-                                                                                value="" placeholder="Enter Email">
-                                                                            <!--end::Input-->
-                                                                            <div
-                                                                                class="fv-plugins-message-container invalid-feedback">
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Input group-->
-                                                                        <!--begin::Input group-->
-                                                                        <div
-                                                                            class="fv-row mb-7 fv-plugins-icon-container">
-                                                                            <!--begin::Label-->
-                                                                            <label
-                                                                                class="fs-6 fw-semibold form-label mt-3">
-                                                                                <span class="required">Password</span>
-                                                                            </label>
-                                                                            <!--end::Label-->
-                                                                            <!--begin::Input-->
-                                                                            <input type="text" name="password"
-                                                                                class="form-control form-control-solid"
-                                                                                id="password" value=""
-                                                                                placeholder="Enter Password">
-                                                                            <!--end::Input-->
-                                                                            <div
-                                                                                class="fv-plugins-message-container invalid-feedback">
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Input group-->
-                                                                        <!--begin::Input group-->
-                                                                        <div
-                                                                            class="fv-row mb-7 fv-plugins-icon-container">
-                                                                            <!--begin::Label-->
-                                                                            <label
-                                                                                class="fs-6 fw-semibold form-label mt-3">
-                                                                                <span class="required">Confirm
-                                                                                    Password</span>
-                                                                            </label>
-                                                                            <!--end::Label-->
-                                                                            <!--begin::Input-->
-                                                                            <input type="text"
-                                                                                name="password_confirmation"
-                                                                                class="form-control form-control-solid"
-                                                                                id="password_confirmation"
-                                                                                placeholder="Confirm Password" value="">
-                                                                            <!--end::Input-->
-                                                                            <div
-                                                                                class="fv-plugins-message-container invalid-feedback">
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Input group-->
-                                                                        <!--begin::Separator-->
-                                                                        <div class="separator mb-6"></div>
-                                                                        <!--end::Separator-->
-                                                                        <!--begin::Action buttons-->
-                                                                        <div class="d-flex justify-content-end">
-                                                                            <!--begin::Button-->
-                                                                            <button type="button"
-                                                                                onclick="reset('create_user_form')"
-                                                                                data-kt-contacts-type="cancel"
-                                                                                class="btn btn-light me-3">
-                                                                                Cancel
-                                                                            </button>
-                                                                            <!--end::Button-->
-                                                                            <!--begin::Button-->
-                                                                            <button type="button" id="createBtn"
-                                                                                data-kt-contacts-type="submit"
-                                                                                class="btn btn-primary"
-                                                                                value="create">Create User
-                                                                            </button>
-                                                                            <!--end::Button-->
-                                                                        </div>
-                                                                        <!--end::Action buttons-->
-                                                                        <div></div>
-                                                                    </form>
-                                                                    <!--end::Form-->
+                                                                       {{-- @include('../forms/users/create-user')--}}
                                                                         <!--end::Form-->
                                                                     </div>
                                                                 </div>
@@ -358,152 +176,10 @@
                                                                     </div>
 
                                                                 </div>
-                                                                <div class="modal-body rtl">
+                                                                <div class="modal-body">
                                                                     <div class="card-body pt-5">
                                                                         <!--begin::Form-->
-                                                                         <!--begin::Form-->
-                                                                    <form
-                                                                        class="form fv-plugins-bootstrap5 fv-plugins-framework"
-                                                                        id="edit_user_form">
-                                                                        @csrf
-                                                                        <!--begin::Input group-->
-                                                                        <div class="mb-7">
-                                                                            <!--begin::Label-->
-                                                                            <label class="fs-6 fw-semibold mb-3">
-                                                                                <span>Edit Photo</span>
-                                                                            </label>
-                                                                            <!--end::Label-->
-                                                                            <!--begin::Image input wrapper-->
-                                                                            <div class="mt-1">
-                                                                                <!--begin::Image placeholder-->
-                                                                                <!-- <style>.image-input-placeholder {
-                    background-image: url({{asset('assets/media/svg/files/blank-image.svg')}});
-                }
-
-                [data-theme="dark"] .image-input-placeholder {
-                    background-image: url({{asset('assets/media/svg/files/blank-image-dark.svg')}});
-                }</style> -->
-                                                                                <!--end::Image placeholder-->
-                                                                                <!--begin::Image input-->
-                                                                                <div class="image-input image-input-outline image-input-placeholder image-input-empty image-input-empty"
-                                                                                    data-kt-image-input="true">
-                                                                                    <!--begin::Preview existing avatar-->
-                                                                                    <div
-                                                                                        class="image-input-wrapper w-100px h-100px">
-                                                                                    </div>
-                                                                                    <!--end::Preview existing avatar-->
-                                                                                    <!--begin::Edit-->
-                                                                                    <label
-                                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                                        data-kt-image-input-action="change"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-kt-initialized="1">
-                                                                                        <i
-                                                                                            class="bi bi-pencil-fill fs-7"></i>
-                                                                                        <!--begin::Inputs-->
-                                                                                        <input id="editImage"
-                                                                                            name="image" type="file"
-                                                                                            accept=".png, .jpg, .jpeg">
-                                                                                        <input type="hidden"
-                                                                                            name="avatar_remove">
-                                                                                        <!--end::Inputs-->
-                                                                                    </label>
-                                                                                    <!--end::Edit-->
-                                                                                    <!--begin::Cancel-->
-                                                                                    <span
-                                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                                        data-kt-image-input-action="cancel"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-kt-initialized="1">
-                                                                                        <i class="bi bi-x fs-2"></i>
-                                                                                    </span>
-                                                                                    <!--end::Cancel-->
-                                                                                    <!--begin::Remove-->
-                                                                                    <span
-                                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                                        data-kt-image-input-action="remove"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-kt-initialized="1">
-                                                                                        <i class="bi bi-x fs-2"></i>
-                                                                                    </span>
-                                                                                    <!--end::Remove-->
-                                                                                </div>
-                                                                                <!--end::Image input-->
-                                                                            </div>
-                                                                            <!--end::Image input wrapper-->
-                                                                        </div>
-                                                                        <!--end::Input group-->
-                                                                        <!--begin::Row-->
-                                                                        <div
-                                                                            class="row row-cols-2 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                                            <!--begin::Input group-->
-                                                                            <div
-                                                                                class="fv-row mb-7 fv-plugins-icon-container">
-                                                                                <!--begin::Label-->
-                                                                                <label
-                                                                                    class="fs-6 fw-semibold form-label mt-3">
-                                                                                    <span class="required">New
-                                                                                        Name</span>
-                                                                                </label>
-                                                                                <!--end::Label-->
-                                                                                <!--begin::Input-->
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control form-control-solid"
-                                                                                    id="editName" value=""
-                                                                                    placeholder="Enter New Name">
-                                                                                <!--end::Input-->
-                                                                                <div
-                                                                                    class="fv-plugins-message-container invalid-feedback">
-                                                                                </div>
-                                                                            </div>
-                                                                            <!--end::Input group-->
-                                                                        </div>
-                                                                        <!--end::Row-->
-                                                                        <!--begin::Input group-->
-                                                                        <div
-                                                                            class="fv-row mb-7 fv-plugins-icon-container">
-                                                                            <!--begin::Label-->
-                                                                            <label
-                                                                                class="fs-6 fw-semibold form-label mt-3">
-                                                                                <span class="required">New Email</span>
-                                                                            </label>
-                                                                            <!--end::Label-->
-                                                                            <!--begin::Input-->
-                                                                            <input id="editEmail" type="email"
-                                                                                name="email"
-                                                                                class="form-control form-control-solid"
-                                                                                value="" placeholder="Enter New Email">
-                                                                            <!--end::Input-->
-                                                                            <div
-                                                                                class="fv-plugins-message-container invalid-feedback">
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Input group-->
-                                                                        <!--begin::Separator-->
-                                                                        <div class="separator mb-6"></div>
-                                                                        <!--end::Separator-->
-                                                                        <!--begin::Action buttons-->
-                                                                        <div class="d-flex justify-content-end">
-                                                                            <!--begin::Button-->
-                                                                            <button type="button"
-                                                                                onclick="reset('edit_user_form')"
-                                                                                data-kt-contacts-type="cancel"
-                                                                                class="btn btn-light me-3">
-                                                                                Cancel
-                                                                            </button>
-                                                                            <!--end::Button-->
-                                                                            <!--begin::Button-->
-                                                                            <button type="button" id="editBtn"
-                                                                                data-kt-contacts-type="submit"
-                                                                                class="btn btn-primary"
-                                                                                value="create">Edit User
-                                                                            </button>
-                                                                            <!--end::Button-->
-                                                                        </div>
-                                                                        <!--end::Action buttons-->
-                                                                        <div></div>
-                                                                    </form>
-                                                                    <!--end::Form-->
+                                                                       {{-- @include('../forms/users/edit-user')--}}
                                                                         <!--end::Form-->
                                                                     </div>
                                                                 </div>
@@ -552,10 +228,12 @@
                 serverSide: true,
                 ajax: "{{ route('showUsers') }}",
                 columns: [
-                    {data: 'settings', className: 'dt-center', orderable: false, searchable: false},
-                    {data: 'email', className: 'dt-center'},
-                    {data: 'employeeName', className: 'dt-center'},
+                    {data: 'image', className: 'dt-center', orderable: false, searchable: false},
                     {data: 'name', className: 'dt-center'},
+                    {data: 'email', className: 'dt-center'},
+                    // {data: 'created_at', name: 'created_at'},
+                    // {data: 'updated_at', name: 'updated_at'},
+                    {data: 'settings', className: 'dt-center', orderable: false, searchable: false},
                 ]
             });
             $('.data-table').DataTable().columns.adjust();
@@ -563,9 +241,9 @@
 
         //add user
         $('#createNewUser').click(function () {
-            $('#createBtn').html('انشاء مستخدم');
+            $('#createBtn').html('Create User');
             $('#create_user_form').trigger("reset");
-            $('#modelHeadingForCreateForm').html("انشاء مستخدم جديد");
+            $('#modelHeadingForCreateForm').html("Create New User");
             $('#ajaxModelForCreateUser').modal('show');
         });
 
@@ -574,8 +252,8 @@
 
             let formData = new FormData();
             formData.append('name', document.getElementById('name').value);
-            formData.append('employeeName', document.getElementById('employeeName').value);
             formData.append('email', document.getElementById('email').value);
+            formData.append('image', document.getElementById('image').files[0]);
             formData.append('password', document.getElementById('password').value);
             formData.append('password_confirmation', document.getElementById('password_confirmation').value);
 
@@ -588,32 +266,31 @@
             let datatableClass = '.data-table';
             let buttonId = 'createBtn';
 
-            store('/addUser', formData, formId, modalId, ajaxModalId, datatableClass, buttonId);
+            store('/user/users', formData, formId, modalId, ajaxModalId, datatableClass, buttonId);
         });
 
 
         let user_id;
         //edit user
-        $('body').on('click', '.editUser', function () {
+        $('body').on('click', '.editBook', function () {
             user_id = $(this).data('id');
-            $.get("{{ url('/updateUser') }}" + '/' + user_id , function (data) {
+            $.get("{{ url('/user/users') }}" + '/' + user_id + '/edit', function (data) {
                 $('#editBtn').html("Edit User");
                 $('#modelHeadingForEditForm').html("Edit User");
                 $('#ajaxModelForEditUser').modal('show');
                 $('#editName').val(data.name);
-                $('#editEmployeeName').val(data.employeeName);
                 $('#editEmail').val(data.email);
             })
         });
 
         $('#editBtn').click(function (e) {
             e.preventDefault();
-            let url = 'updateUser' + user_id ;
+            let url = '/user/users/' + user_id + '/edit';
 
             let formData = new FormData();
             formData.append('name', document.getElementById('editName').value);
-            formData.append('employeeName', document.getElementById('editEmployeeName').value);
             formData.append('email', document.getElementById('editEmail').value);
+            formData.append('image', document.getElementById('editImage').files[0]);
 
             let formId = 'edit_user_form';
             let ajaxModalId = 'ajaxModelForEditUser';
@@ -625,7 +302,7 @@
 
 
         //delete user
-        $('body').on('click', '.deleteUser', function () {
+        $('body').on('click', '.deleteBook', function () {
             let user_id = $(this).data("id");
             confirmDestroy('/user/users/delete', user_id, '.data-table');
         });

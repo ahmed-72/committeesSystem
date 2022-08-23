@@ -1,11 +1,11 @@
    
-<!--begin::notifications -->
-<div class="app-navbar-item ms-2 ms-lg-3">
+<!--begin::notifications --> 
+<div class="app-navbar-item ms-1 ms-lg-3" style="box-shadow:2px 2px #cefad0" >
     <!--begin::Menu toggle-->
     <a href="#"
         class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
         data-kt-menu-trigger="{default:'click', lg:'hover' }" data-kt-menu-attach="parent"
-        data-kt-menu-placement="bottom-end">
+        data-kt-menu-placement="bottom-end" >
 
         @if($unredCount >0)
         <span class="badge badge-light-danger badge-circle fw-bold fs-7">{{$unredCount}} </span>

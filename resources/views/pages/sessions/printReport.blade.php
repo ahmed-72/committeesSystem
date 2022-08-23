@@ -26,19 +26,22 @@
         text-align: center;
         border: none;
     }
-    @media print {
+    @media print {}
 
 body {
-  margin: 0;
-  color: #000;
-  background-color: #fff;
-}
+
+  max-width: 595px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+      
+    }
 img{
     width: 80px;
     height: 80px;
 }
 
-}
+
     </style>
 </head>
 
@@ -56,7 +59,70 @@ img{
         </div>
 
     </div>
+    <div class="col-7 mr-auto  ml-3 mt-3">
 
+<div class="mt-3">
+    <table>
+        <thead>
+            <tr>
+                <th >م.</th>
+                <th >الاسم</th>
+                <th >التوصيف</th>
+                <th>الحضور</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($members as $member)
+            <tr>
+                <td>{{$member->memberID}}</td>
+                <td>{{$member->member->employee->employeeName}}</td>
+                <td>{{$member->member->employee->employeeJobTitle}}</td>
+                <td>{{$member->attendee}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+<hr>
+<div class="topics">
+    @foreach($topics as $topic)
+    <table>
+        <thead>
+            <tr>
+                <th colspan="1">م.</th>
+                <th colspan="1">البند</th>
+                <th colspan="6">التفاصيل</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td rowspan="4"><label >{{$topic->discussiontopic_topicID}}</label></td>
+                <td rowspan="4"> <label >{{$topicDetails[$topic->discussiontopic_topicID][0]->topicDescription}}<br>{{$topicDetails[$topic->discussiontopic_topicID][0]->ResolutionDescription}} </label > </td>
+                <th colspan="6">المداولات</th>
+                <!-- `deliberations`, `decisions`, `executionDepartment`, `executionDeadline -->
+            </tr> 
+            <tr> 
+                <td colspan="6"><label cols="70" rows="5" for="">{{$topic->deliberations}}</label></td>
+            </tr>
+            <tr>
+                <th colspan="3">القرارت</th>
+                <th>جهة التنفيذ</th>
+                <th>اجل التنفيذ</th>
+            </tr>
+            <tr> 
+                <td colspan="3"> <label for="" cols="50" rows="5">{{$topic->decisions}} </label></td>
+                <td><label for="">{{$topic->executionDepartment}}</label></td>
+                <td><label for="">{{$topic->executionDeadline}}</label></td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    @endforeach
+</div>
+    </div>
 
 </body>
 

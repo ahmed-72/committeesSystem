@@ -3,10 +3,10 @@
 
 
     <!--begin::User menu-->
-    <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+    <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle" style="box-shadow:2px 2px #cefad0">
         <!--begin::Menu wrapper-->
-        <div class="cursor-pointer symbol symbol-35px symbol-md-40px border border-primary mx-4"
-                     data-kt-menu-trigger="click"
+        <div class="cursor-pointer symbol symbol-35px symbol-md-40px  mx-4"
+                     data-kt-menu-trigger="click" 
             data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
             <span class="svg-icon svg-icon-primary svg-icon-2x">
                 <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/General/User.svg--><svg
@@ -82,7 +82,7 @@
     </div>
     <!--end::User menu-->
     <!--begin::Header menu toggle-->
-    <div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
+    <div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu" >
         <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_header_menu_toggle">
             <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
             <span class="svg-icon svg-icon-1">

@@ -42,7 +42,13 @@
         </nav>
     </div>
 
-
+@if($notReady==1)
+<h3 class="alert alert-danger col-6">هذه الجلسة لم يحن وقتها بعد</h3>
+<div class="mb-0">
+    <a href="{{route('mainhome')}}" class="btn btn-sm btn-primary">عودة للصفحة الرئيسية</a>
+    <a href="{{ url()->previous()}}" class="btn btn-sm btn-primary">عودة للصفحة السابقة</a>
+</div>
+@else
     @if($errors->any())
     <ul  class="alert alert-danger col-6">
         @foreach($errors->all() as $message)
@@ -160,6 +166,7 @@
 
         </form>
     </div>
+    @endif
 </body>
 
 </html>

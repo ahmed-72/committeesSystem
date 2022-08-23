@@ -1,155 +1,206 @@
 @extends('pages.parent')
 
-@section('title','Show Committees')
+@section('title','عرض لجاني')
 
-@section('page_name','Committees')
+@section('page_name','منظومة اللجان')
 
-@section('main_path','committees')
-@section('sub_path','show committees')
+@section('main_path','اللجان')
+@section('sub_path','عرض لجاني')
+
 
 
 @section('styles')
+
+<style>
+.app-toolbar {
+    direction: rtl;
+}
+
+.form span {
+    font-size: 20px;
+}
+</style>
+
 @endsection
 
 @section('content')
-    <!--begin::Main-->
-    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-        <!--begin::Content wrapper-->
-        <div class="d-flex flex-column flex-column-fluid">
+
+<div dir="rtl" id="kt_app_content" class="app-content flex-column-fluid" data-select2-id="select2-data-kt_app_content">
+    <!--begin::Content container-->
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <!--begin::Contacts App- Add New Contact-->
+        <div class="row g-7" data-select2-id="select2-data-127-s6zt">
             <!--begin::Content-->
-            <div id="kt_app_content" class="app-content flex-column-fluid">
-                <!--begin::Content container-->
-                <div id="kt_app_content_container" class="app-container container-fluid">
-                    <!--begin::Row-->
-                    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-                        <!--begin::Col-->
-                        <div class="col-xxl-6">
-                            <!--begin::Engage widget 10-->
-                            <div style="background-color: inherit" class="card card-flush h-md-100">
-                                <!--begin::Body-->
-                                <div class="card card-flush mt-6 mt-xl-9">
-                                    <!--begin::Card header-->
-                                    <div class="card-header mt-5">
-                                        <!--begin::Card title-->
-                                        <div class="card-title flex-column">
-                                            <h3 class="fw-bold mb-1">Committees Information</h3>
-                                            <div class="fs-6 text-gray-400">all Committees data from Committee table
-                                            </div>
-                                        </div>
-                                        <!--begin::Card title-->
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar my-1" data-select2-id="select2-data-159-eyt2">
-                                        </div>
-                                        <!--begin::Card toolbar-->
-                                    </div>
-                                    <!--end::Card header-->
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0">
-                                        <!--begin::Table container-->
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <div id="kt_profile_overview_table_wrapper"
-                                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                                <div class="table-responsive">
-                                                    <div class="container">
-                                                        <div class="card-body py-3">
-                                                            <!--begin::Table container-->
-                                                            <div class="table-responsive">
-                                                                <!--begin::Table-->
-                                                                <table
-                                                                    class="table table-striped hover table-rounded table-row-bordered data-table">
-                                                                    <thead>
-                                                                    <tr class="fw-bold text-muted bg-light">
-                                                                        <th style="padding: 20px" class="min-w-150px">
-                                                                            Committee Name
-                                                                        </th>
-                                                                        <th style="padding: 20px" class="min-w-150px">
-                                                                            Committee Status
-                                                                        </th>
-                                                                        <th style="padding: 20px" class="min-w-150px">
-                                                                            Date
-                                                                        </th>
-                                                                        <th style="padding: 20px" class="min-w-50px">
-                                                                            settings
-                                                                        </th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                </table>
-                                                                <!--end::Table-->
-                                                            </div>
-                                                            <!--end::Table container-->
-                                                        </div>
+            <div class="col-xl-12" data-select2-id="select2-data-126-xy7q">
+                <!--begin::Contacts-->
+                <div class="card card-flush h-lg-100" id="kt_contacts_main"
+                    data-select2-id="select2-data-kt_contacts_main">
+                    <!--begin::Card header-->
+                    <div class="card-header pt-7" id="kt_chat_contacts_header">
+                        <!--begin::Card title-->
+                        <div class="card-title">
+                            <!--begin::Svg Icon | path: icons/duotune/communication/com005.svg-->
+                            <span class="svg-icon svg-icon-1 me-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z"
+                                        fill="currentColor"></path>
+                                    <path opacity="0.3"
+                                        d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <h2 style="margin: 10px 5px 0 0;">عرض لجاني</h2>
+                        </div>
+                        <!--end::Card title-->
+
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-5" data-select2-id="select2-data-125-c05l">
+                        <!--begin::Form-->
+                        <hr>
+                        <br><br>
+                        <div class="tab-content">
+                            <!--begin::Tab pane-->
+                            <div id="kt_project_users_card_pane" class="tab-pane fade active show" role="tabpanel">
+
+                                <!--begin::Row-->
+                                <div class="row g-6 g-xl-9">
+                                    @foreach($committees as $committee)
+
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 col-xxl-4">
+                                        <!--begin::Card-->
+                                        <div class="card shadow-sm card-bordered">
+                                            <!--begin::Card body-->
+                                            <div class="card-body d-flex flex-center flex-column pt-12 p-9">
+                                                <!--begin::Name-->
+                                                <a href="#"
+                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{$committee->committeeName}}</a>
+                                                <!--end::Name-->
+                                                <!--begin::Position-->
+                                                <?php $created_at=$committee->created_at->diffForHumans() ; 
+                                                $number=substr($committee->created_at->diffForHumans(),0,2) ;
+                                              
+                                                if (str_contains($created_at, 'day')&& $number=='1 ') 
+                                                $created_at='يومٍ مضى'; 
+                                                elseif (str_contains($created_at, 'days')&& $number=='2 ') 
+                                                $created_at='يومين مضيا';
+                                                elseif (str_contains($created_at, 'days')&& $number!='1 '&& $number!='2 ') 
+                                                $created_at=$number.'أيامٍ مضت';
+
+                                                elseif (str_contains($created_at, 'week')&& $number=='1 ') 
+                                                $created_at='أسبوعٍ مضى'; 
+                                                elseif (str_contains($created_at, 'weeks')&& $number=='2 ') 
+                                                $created_at='أسبوعين مضيا';
+                                                elseif (str_contains($created_at, 'weeks')&& $number!='1 '&& $number!='2 ') 
+                                                $created_at=$number.'أسابيعٍ مضت';
+
+                                                elseif (str_contains($created_at, 'month')&& $number=='1 ') 
+                                                $created_at='شهرٍ مضى'; 
+                                                elseif (str_contains($created_at, 'months')&& $number=='2 ') 
+                                                $created_at='شهرين مضيا';
+                                                elseif (str_contains($created_at, 'months')&& $number!='1 '&& $number!='2 ') 
+                                                $created_at=$number.'أشهرٍ مضت';
+                                                
+                                                elseif (str_contains($created_at, 'year')&& $number=='1 ') 
+                                                $created_at='سنةٍ مضى'; 
+                                                elseif (str_contains($created_at, 'years')&& $number=='2 ') 
+                                                $created_at='سنتين مضتا';
+                                                elseif (str_contains($created_at, 'years')&& $number!='1 '&& $number!='2 ') 
+                                                $created_at=$number.'سنينٍ مضت';
+
+                                                ?>
+                                                <div class="fw-semibold text-gray-400 mb-6"> جلسة رقم
+                                                    أنشئت قبل {{$created_at}}</div>
+                                                <!--end::Position-->
+                                                <!--begin::Info-->
+                                                <div class="d-flex flex-center flex-wrap">
+                                                    <!--begin::Stats-->
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                                        <div class="fs-6 fw-bold text-gray-700">
+                                                            {{$committee->members->count()}}</div>
+                                                        <div class="fw-semibold text-gray-400">عدد الأعضاء</div>
                                                     </div>
+                                                    <!--end::Stats-->
+                                                    <!--begin::Stats-->
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                                        <div class="fs-6 fw-bold text-gray-700">
+                                                            {{$committee->sessions->count()}}</div>
+                                                        <div class="fw-semibold text-gray-400">عدد الجلسات</div>
+                                                    </div>
+                                                    <!--end::Stats-->
+                                                    <!--begin::Stats-->
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                                        <div class="fs-6 fw-bold text-gray-700">
+                                                            {{$committee->tasks->count()}}</div>
+                                                        <div class="fw-semibold text-gray-400">عدد المهمات</div>
+                                                    </div>
+                                                    <!--end::Stats-->
+                                                    <!--begin::Stats-->
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                                        <div class="fs-6 fw-bold text-gray-700">
+                                                            {{$committee->regulations->count()}}</div>
+                                                        <div class="fw-semibold text-gray-400">عدد الضوابط</div>
+                                                    </div>
+                                                    <!--end::Stats-->
+                                                    <!--begin::Stats-->
+                                                    @php $topicsCount=0 @endphp
+                                                    @foreach($committee->discussiontopics as $topic)
+                                                    @if($topic->isDiscussed=='notDiscussed'||$topic->isDiscussed=='notDiscussed')
+                                                    @php $topicsCount++ @endphp
+                                                    @endif
+                                                    @endforeach
+                                                    <div
+                                                        class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                                        <div class="fs-6 fw-bold text-gray-700">
+                                                            {{$topicsCount}}</div>
+                                                        <div class="fw-semibold text-gray-400">عدد المواضيع التي تحتاج
+                                                            لمناقشة</div>
+                                                    </div>
+                                                    <!--end::Stats-->
+                                                </div>
+                                                <!--end::Info-->
+                                                <div class="d-flex my-4">
+                                                    <a
+                                                        href="{{route('committee',['committeeID'=>$committee->committeeID])}}"><span
+                                                            class="fonts btn btn-sm btn-primary me-2">عرض تفاصيل
+                                                            اللجنة</span></a>
                                                 </div>
                                             </div>
+                                            <!--end::Card body-->
                                         </div>
-                                        <!--end::Table-->
+                                        <!--end::Card-->
                                     </div>
-                                    <!--end::Table container-->
+                                    <!--end::Col-->
+                                    @endforeach
                                 </div>
-                                <!--end::Card body-->
+                                <!--end::Row-->
+
                             </div>
-                            <!--end::Body-->
+                            <!--end::Tab pane-->
                         </div>
-                        <!--end::Engage widget 10-->
+                        <!--end::Form-->
                     </div>
-                    <!--end::Col-->
+                    <!--end::Card body-->
                 </div>
-                <!--end::Row-->
+                <!--end::Contacts-->
             </div>
-            <!--end::Content container-->
+            <!--end::Content-->
         </div>
-        <!--end::Content-->
+        <!--end::Contacts App- Add New Contact-->
     </div>
-    <!--end::Content wrapper-->
-    <!--end:::Main-->
+    <!--end::Content container-->
+</div>
 
 @endsection
 
 @section('scripts')
-
-    <script>
-
-        $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            let table = $('.data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('showCommittee') }}",
-                columns: [
-                    {data: 'committeeName', className: 'dt-center'},
-                    {
-                        data: 'committeeStatus', className: 'dt-center',
-                        "render": function (data) {
-                            if (data == '1') {
-                                return "<div style='font-size: 15px' class='badge badge-light-success'>نشطة</div>";
-                            } else {
-                                return "<div style='font-size: 15px' class='badge badge-light-danger'>غير نشطة</div>";
-                            }
-                        }
-                    },
-                    {data: 'committeeDate', className: 'dt-center'},
-                    // {data: 'created_at', name: 'created_at'},
-                    // {data: 'updated_at', name: 'updated_at'},
-                    {data: 'settings', className: 'dt-center', orderable: false, searchable: false},
-                ]
-            });
-            $('.data-table').DataTable().columns.adjust();
-        })
-        ;
-
-        let user_id;
-
-        //delete user
-        $('body').on('click', '.swapCommitteeStatus', function () {
-            let committee_id = $(this).data("id");
-            confirmSwap('/user/committees/swapCommitteeStatus', committee_id, '.data-table');
-        });
-
-    </script>
-
 @endsection

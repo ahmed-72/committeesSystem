@@ -30,18 +30,6 @@ th {
 
 <div dir="rtl" class="card card-flush h-lg-100" id="kt_contacts_main" data-select2-id="select2-data-kt_contacts_main">
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <div class="navbar-brand">
-            <img src="https://palsawa.com/uploads/images/2y3r0.jpg" width="40" height="40"
-                class="d-inline-block align-top" alt="">
-        </div>
-
-        <h5 class="my-0 mr-md-auto font-weight-normal">وزارة الأوقاف و الشؤون الدينية</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#"></a>
-        </nav>
-    </div>
-
     @if($errors->any())
     <ul class="alert alert-danger col-6">
         @foreach($errors->all() as $message)

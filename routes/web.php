@@ -88,6 +88,8 @@ Route::post('/sessionConfirmation',[sessionController::class,'sessionConfirmatio
 Route::get('/sessionReport/{committeeID}/{sessionID}',[sessionController::class,'sessionReport_create'] )->name('sessionReport.create');
 Route::post('/sessionReport',[sessionController::class,'sessionReport_store'] )->name('sessionReport.store'); 
 
+Route::get('/printReport/{committeeID}/{sessionID}',[sessionController::class,'printReport'])->name('printReport');
+
 // اشعارات القرارات
 // [notificationController::class,'
 Route::get('/notifications',[notificationController::class,'index' ])->name('notifications');
@@ -109,9 +111,7 @@ Route::resource('roleUser', roleUserController::class)->middleware('user.type:su
 
 //'App\Http\Controllers\projectController@signin'
 
-Route::get('/printReport/{committeeID}/{sessionID}', function () {
-    return view('pages/sessions/printReport');
-})->name('printReport');
+
 
 Route::get('/create', function () {
     return view('pages/committees/create');
