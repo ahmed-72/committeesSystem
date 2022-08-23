@@ -23,9 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', function () {
-    return view('pages/home');
-})->middleware(['auth'])->name('mainhome');
+Route::get('/home',[userController::class,'home'] )->middleware('auth')->name('mainhome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -48,14 +46,14 @@ Route::put('/updateUser/{id}',[userController::class,'update'] )->middleware('au
 Route::middleware(['auth',])->group(function () {
     
 //committee
-Route::get('/allCommittees',[committeeController::class,'indexAll'] )->middleware('user.type:super-admin');
+Route::get('/allCommittees',[committeeController::class,'indexAll'] )->middleware('user.type:super-admin')->name('allCommittee');
 
-Route::get('/addCommittee',[committeeController::class,'create'] );
+Route::get('/addCommittee',[committeeController::class,'create'] )->name('addCommittee.create'); 
 Route::post('/addCommittee',[committeeController::class,'store'] )->name('addCommittee.store');
 
 Route::get('/showCommittees',[committeeController::class,'index'] )->name('showCommittee');
 
-Route::get('/committee/{committeeID}',[committeeController::class,'show'] )->name('committee');
+Route::get('/committee/{committeeID}',[committeeController::class,'newShow'] )->name('committee');
 
 
 Route::get('/updateCommittees/{committeeID}',[committeeController::class,'edit'] )->name('updatecommittee.edit');
@@ -65,9 +63,10 @@ Route::get('/deleteCommittee/{committeeID}',[committeeController::class,'destroy
 
 //sessions
 Route::get('/addSession/{committeeID}',[sessionController::class,'create'] )->name('addSession.create');
-Route::post('/addSession',[sessionController::class,'store'] )->name('addSession.store');
+Route::post('/addSession',[sessionController::class,'store'] )->name('addSession.store'); 
 
 Route::get('/showSessions/{committeeID}',[sessionController::class,'index'] )->name('showSessions');
+Route::get('/mySessions',[sessionController::class,'mySessions'] )->name('mySessions');
 
 
 //deletes on update blade
@@ -96,9 +95,9 @@ Route::get('/notification/{notificationID}',[notificationController::class,'show
 Route::get('/markNotificationAsRead/{notificationID}',[notificationController::class,'markAsRead'] )->name('markNotificationAsRead');
 
 //roleeeeeees
-Route::resource('roles', rolesController::class) ;
+Route::resource('roles', rolesController::class)->middleware('user.type:super-admin') ;
 
-Route::resource('roleUser', roleUserController::class);// ->middleware('user.type:super-admin') ;
+Route::resource('roleUser', roleUserController::class)->middleware('user.type:super-admin') ;
 
 
 // Route::get('/roleUser',[rolesController::class,'role_user_create'] )->name('roleUser.create');
@@ -110,7 +109,7 @@ Route::resource('roleUser', roleUserController::class);// ->middleware('user.typ
 
 //'App\Http\Controllers\projectController@signin'
 
-Route::get('/printReport/{sessionID}', function () {
+Route::get('/printReport/{committeeID}/{sessionID}', function () {
     return view('pages/sessions/printReport');
 })->name('printReport');
 

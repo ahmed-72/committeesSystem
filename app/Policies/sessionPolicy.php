@@ -80,17 +80,9 @@ class sessionPolicy
      * @param  \App\Models\session  $session
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, session $session)
+    public function view(User $user)
     {
-        $members = member::select('employee_employeeID')->where('committee_committeeID', $session->committee_committeeID)->get();
-
-        $employeesID = array();
-        foreach ($members as $member) {
-            $employeesID[] = $member->employee_employeeID;
-        }
-        if (in_array($user->employeeID, $employeesID) /*&& $user->hasAbility('committee.view')*/) {
-            return true;
-        }
+        return  $user->hasAbility('session.view');
     }
 
     /**

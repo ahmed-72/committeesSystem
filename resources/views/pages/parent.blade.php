@@ -45,13 +45,19 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{asset('assets/plugins/custom/toastr/toastr.min.css')}}">
     @yield('styles')
+
+    <style>
+       .app-footer{
+        margin-top:while min(80px);
+       } 
+    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 <body data-kt-name="metronic" id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
       data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
       data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true"
-      data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
+      data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default" dir="rtl">
 <!--begin::Theme mode setup on page load-->
 <script>if (document.documentElement) {
         const defaultThemeMode = "system";

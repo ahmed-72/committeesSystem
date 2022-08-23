@@ -566,12 +566,14 @@ class CommitteeController extends Controller
 
         $user = Auth::user();
         $userID = $user->employeeID;
-        //$userID = 20105025;
-        $committee = member::select('committee_committeeID')->where('employee_employeeID', $userID)->where('committee_committeeID', $committeeID)->first();
-        if ($committee != null) {
-            $committee = committee::where('committeeID', $committeeID)->first();
+       
+        $committee = committee::where('committeeID', $committeeID)->first();
             return view('pages/sessions/addDiscussionTopics')->with('committee', $committee);
-        } else return view('pages/sessions/addDiscussionTopics')->with('fail', 'fail');
+        // $committee = member::select('committee_committeeID')->where('employee_employeeID', $userID)->where('committee_committeeID', $committeeID)->first();
+        // if ($committee != null) {
+        //     $committee = committee::where('committeeID', $committeeID)->first();
+        //     return view('pages/sessions/addDiscussionTopics')->with('committee', $committee);
+        // } else return view('pages/sessions/addDiscussionTopics')->with('fail', 'fail');
     }
 
     public function storeTopics(Request $request)

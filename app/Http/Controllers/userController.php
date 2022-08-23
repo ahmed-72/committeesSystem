@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\employee;
+use App\Models\member;
 use App\Models\role;
 use App\Models\roleUser;
+use App\Models\session;
 use App\Models\User;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
@@ -142,5 +144,25 @@ dd($user->id);
     $status = 1;
 
     return redirect(route('showUsers'))->with('updateStatus', $status);
+  }
+/*
+home page
+*/
+  public function home(){
+
+    $employeeID = Auth::user()->employeeID;
+    $today = date('Y-m-d');
+        
+    $members = member::where('employee_employeeID', $employeeID)->with('employee', 'committee')->get();
+    $upcomingSessions = array();
+
+    foreach ($members as $member) {
+        $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate',$today)->orderBy('sessionStartAt')->with('committee')->get();
+        foreach ($temps as $temp) {
+            $upcomingSessions[] = $temp;
+        }
+        $temps = [];
+    }
+    return view('pages/home')->with('upcomingSessions',$upcomingSessions);
   }
 }

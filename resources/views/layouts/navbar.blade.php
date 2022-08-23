@@ -2,14 +2,6 @@
 <div class="app-navbar flex-shrink-0">
 
 
-
-    <!--begin::Notifications-->
-    <x-notification-menu />
-    <!--end::Notifications-->
-
-
-
-
     <!--begin::User menu-->
     <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
         <!--begin::Menu wrapper-->
@@ -37,8 +29,8 @@
         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
             data-kt-menu="true">
             <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <div class="menu-content d-flex align-items-center px-3">
+            <div class="menu-item px-3" >
+                <div class="menu-content d-flex align-items-center px-3" >
                     <!--begin::Avatar-->
                     <div class="symbol symbol-50px me-5">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -75,13 +67,13 @@
             <!--end::Menu separator-->
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="{{route('userProfile',Auth::user()->id)}}" class="menu-link px-5">My Profile</a>
+                <a href="{{route('userProfile',Auth::user()->id)}}" class="menu-link px-5">الصفحة الشخصية</a>
             </div>
             <!--end::Menu item-->
 
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="{{ URL('/logout') }}" class="menu-link px-5">Sign Out</a>
+                <a href="{{ URL('/logout') }}" class="menu-link px-5">تسجيل خروج</a>
             </div>
             <!--end::Menu item-->
         </div>
@@ -107,5 +99,9 @@
         </div>
     </div>
     <!--end::Header menu toggle-->
+
+        <!--begin::Notifications-->
+        <x-notification-menu />
+    <!--end::Notifications-->
 </div>
 <!--end::Navbar-->

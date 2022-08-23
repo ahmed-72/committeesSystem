@@ -31,8 +31,44 @@ class sessionController extends Controller
         $session = session::where('committee_committeeID', $committeeID)->first();
         $this->authorize('member', $session);
 
-        $sessions=session::where('committee_committeeID', $committeeID)->get();
-        return view('pages/sessions/showSessions')->with('sessions',$sessions);
+        $sessions = session::where('committee_committeeID', $committeeID)->get();
+        return view('pages/sessions/showSessions')->with('sessions', $sessions);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function mySessions()
+    {
+        $this->authorize('view', session::class);
+        
+
+        $employeeID = Auth::user()->employeeID;
+        $today = date('Y-m-d');
+        $afterThreeDays = date('Y-m-d', strtotime('+3 days'));
+        $beforThreeDays = date('Y-m-d', strtotime('-3 days'));
+
+        $sessions = session::where('sessionDate', '>', $today)->where('sessionDate', '<', $afterThreeDays)->get();
+        
+        $members = member::where('employee_employeeID', $employeeID)->with('employee', 'committee')->get();
+        $previousSessions = array();
+        $upcomingSessions = array();
+
+        foreach ($members as $member) {
+            $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate','<',$today)->orderBy('sessionDate')->with('committee')->get();
+            foreach ($temps as $temp) {
+                $previousSessions[] = $temp;
+            }
+            $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate','>=',$today)->orderBy('sessionDate')->with('committee')->get();
+            foreach ($temps as $temp) {
+                $upcomingSessions[] = $temp;
+            }
+            $temps = [];
+        }
+       
+
+        return view('pages/sessions/mySessions')->with(['previousSessions'=>$previousSessions,'upcomingSessions'=>$upcomingSessions]);
     }
 
     /**
@@ -44,9 +80,9 @@ class sessionController extends Controller
     {
         $session = session::where('committee_committeeID', $committeeID)->first();
         $this->authorize('chief', $session);
-     
-        $committee = committee::where('committeeID',$committeeID)->select('committeeID', 'committeeName')->first();
-         // dd($committee->toArray());
+
+        $committee = committee::where('committeeID', $committeeID)->select('committeeID', 'committeeName')->first();
+        // dd($committee->toArray());
         return view('pages/sessions/addSession')->with('committee', $committee);
     }
 
@@ -60,8 +96,8 @@ class sessionController extends Controller
     {
         $session = session::where('committee_committeeID', $request['committeeID'])->first();
         $this->authorize('member', $session);
-        
-       
+
+
         $committeeID = $request['committeeID'];
         $sessionNum = session::where('committee_committeeID', $committeeID)->get();
         $sessionID = count($sessionNum) + 1;
@@ -86,7 +122,7 @@ class sessionController extends Controller
      */
     public function showSessionTopics($committeeID)
     {
-        $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('employee')->get();
+        $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('employee','committee')->get();
         //  dd($topics->toArray());
         return view('pages/sessions/showSessionTopics')->with('topics', $topics);
     }
@@ -101,12 +137,12 @@ class sessionController extends Controller
     {
         $session = session::where('committee_committeeID', $committeeID)->first();
         $this->authorize('chief', $session);
-        
+
         $topics = discussiontopic::where(['committee_committeeID' => $committeeID,])->with('committee')->with('session')->with('employee')->get();
-        $session=session::where(['committee_committeeID' => $committeeID,'sessionID'=>$sessionID])->with('committee')->first();
+        $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
         $date = date('Y-m-d');
         //dd($topics->toArray());
-        return view('pages/sessions/prepareSession')->with(['topics'=> $topics ,'session'=>$session])->with('date', $date);
+        return view('pages/sessions/prepareSession')->with(['topics' => $topics, 'session' => $session])->with('date', $date);
     }
 
     /**
@@ -115,7 +151,7 @@ class sessionController extends Controller
      */
     public function sessionConfirmation(Request $request)
     {
-        $session = session::where('committee_committeeID',$request['committeeID'])->first();
+        $session = session::where('committee_committeeID', $request['committeeID'])->first();
         $this->authorize('chief', $session);
         // dd($request->all()); 
         $request->validate(
@@ -134,7 +170,6 @@ class sessionController extends Controller
             $session->discussiontopic_topicID  = $request['topicID'][$i];
             $session->save();
             discussiontopic::where('committee_committeeID', $request['committeeID'])->where('topicID', $request['topicID'][$i])->update(['isDiscussed' => 'inProgress']);
-    
         }
 
 
@@ -157,9 +192,9 @@ class sessionController extends Controller
         $session = session::where(['sessionID' => $request['sessionID'], 'committee_committeeID' => $request['committeeID']])->with('committee')->first();
 
         $employees = member::where('committee_committeeID', $request['committeeID'])->with('employee')->get();
-       
+
         foreach ($employees as $employee) {
-            $user=User::where('employeeID',$employee->employee_employeeID)->first();
+            $user = User::where('employeeID', $employee->employee_employeeID)->first();
             $user->notify(new sessionNotification($session));
         }
         // dd($employeesPhones); send sms foe all member in this array
@@ -174,7 +209,7 @@ class sessionController extends Controller
      **/
     public function sessionReport_create($committeeID, $sessionID)
     {
-        $session = session::where('committee_committeeID',$committeeID)->first();
+        $session = session::where('committee_committeeID', $committeeID)->first();
         $this->authorize('chief', $session);
 
         $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
@@ -197,7 +232,7 @@ class sessionController extends Controller
      **/
     public function sessionReport_store(Request $request)
     {
-        $session = session::where('committee_committeeID',$request['committeeID'])->first();
+        $session = session::where('committee_committeeID', $request['committeeID'])->first();
         $this->authorize('chief', $session);
 
         // dd($request->all());
@@ -231,7 +266,7 @@ class sessionController extends Controller
             'tracking.*.required'  => 'يجب تحديد حالة متابعة لجميع البنود',
 
         ]);
-     /* شغال
+        /* شغال
             sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->update([
                 'deliberations' => $request['deliberation'][$topicID],
                 'decisions' => $request['decision'][$topicID],
@@ -250,19 +285,19 @@ class sessionController extends Controller
                 'decisions' => $request['decision'][$topicID],
                 'executionDepartment' => $request['executionDepartment'][$topicID],
                 'executionDeadline' => $request['executionDeadline'][$topicID],
-            ]); 
+            ]);
             //notifications
-        $sessiontopic= sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->with('committee')->first();
-         $department= $request['executionDepartment'][$topicID];
-         $employees=employee::where('employeeDepartment',$department)->get();
-            foreach($employees as $employee){
-                $user=User::where('employeeID',$employee->employeeID)->first();
+            $sessiontopic = sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->with('committee')->first();
+            $department = $request['executionDepartment'][$topicID];
+            $employees = employee::where('employeeDepartment', $department)->get();
+            foreach ($employees as $employee) {
+                $user = User::where('employeeID', $employee->employeeID)->first();
                 $user->notify(new UserNotification($sessiontopic));
             }
         }
-  
 
-        
+
+
         foreach ($request['attendee'] as $memberID => $attendee) {
             $sessionmember = new sessionmember();
             $sessionmember->committee_committeeID = $committeeID;
@@ -272,7 +307,7 @@ class sessionController extends Controller
             if ($attendee == 'attendant')  $sessionmember->attendee = 'حاضر';
             else if ($attendee == 'absent') $sessionmember->attendee = 'متغيب';
             else if ($attendee == 'apologized') $sessionmember->attendee = 'معتذر';
-          //  $sessionmember->save();
+            //  $sessionmember->save();
         }
         foreach ($request['tracking'] as $topicID => $status) {
 
@@ -281,7 +316,7 @@ class sessionController extends Controller
             ]);
         }
 
-        $user=Auth::user();
+        $user = Auth::user();
 
         return redirect()->back();
     }

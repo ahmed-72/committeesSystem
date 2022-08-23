@@ -43,7 +43,7 @@
                 </div>
                 <!--end::Menu-->
             </div>
-            @include('layouts.navbar')
+            {{--@include('layouts.navbar')--}}
             <!--end::Menu wrapper-->
         </div>
         <!--end::Header wrapper-->

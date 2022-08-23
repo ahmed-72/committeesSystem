@@ -12,7 +12,7 @@
         <div class="col-12 col-sm-auto text-center text-sm-right">
                     <p class="email mb-1"><i class="fa fa-envelope"></i> info@palwakf.ps</p>
                     <p class="email mb-1"><i class="fa fa-phone"></i> +97282807366</p>
-                    <p class="copyright mb-0">وزارة الأوقاف والشئون الدينية © 2022</p>
+                    <p class="copyright mb-0">وزارة الأوقاف والشؤون الدينية © 2022</p>
                 </div>
         <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
             <li class="menu-item">

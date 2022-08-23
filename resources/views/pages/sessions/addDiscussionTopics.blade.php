@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ar">
 
 <head>
@@ -10,26 +10,34 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/pricing/">
 
-    <!-- Bootstrap core CSS -->
+    <!- - Bootstrap core CSS - ->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 
     <title>Document</title>
 
 </head>
 
-<body dir="rtl">
+<body dir="rtl"> -->
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <div class="navbar-brand">
-            <img src="https://palsawa.com/uploads/images/2y3r0.jpg" width="40" height="40"
-                class="d-inline-block align-top" alt="">
-        </div>
+@extends('pages.parent')
 
-        <h5 class="my-0 mr-md-auto font-weight-normal">وزارة الأوقاف و الشؤون الدينية</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#"></a>
-        </nav>
-    </div>
+@section('title','Wellcome to Dashboard')
+
+@section('page_name','Demo')
+@section('main_path','Demo')
+@section('sub_path','Demo')
+
+@section('styles')
+<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+        integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/pricing/">
+
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+@endsection
+
+@section('content')
+
 
     @if($errors->any())
     <ul class="alert alert-danger col-6">
@@ -95,7 +103,12 @@
             </div>
         </form>
     </div>
-</body>
+
+    @endsection
+
+@section('scripts')
+
+
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>
 @include('includes.myscripts')
 
@@ -128,4 +141,4 @@ $(document).ready(function() {
     });
 });
 </script>
-</html>
+@endsection

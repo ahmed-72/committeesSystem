@@ -1,135 +1,155 @@
 @extends('pages.parent')
 
-@section('title','Wellcome to Dashboard')
+@section('title','Show Committees')
 
-@section('page_name','Demo')
-@section('main_path','Demo')
-@section('sub_path','Demo')
+@section('page_name','Committees')
+
+@section('main_path','committees')
+@section('sub_path','show committees')
+
 
 @section('styles')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
 @endsection
 
 @section('content')
-
-
-
-<div dir="rtl">
-
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <div class="navbar-brand">
-            <img src="https://palsawa.com/uploads/images/2y3r0.jpg" width="40" height="40"
-                class="d-inline-block align-top" alt="">
-        </div>
-
-        <h5 class="my-0 mr-md-auto font-weight-normal">وزارة الأوقاف و الشؤون الدينية</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#"></a>
-        </nav>
-    </div>
-
-    <ul class="col-12">
-        @foreach($committees as $committee)
-
-        <li>
-            <div>
-                <h5 class="d-inline"> {{$committee->committeeID}} </h5>
-                <button type="button" class="btn btn-info d-inline "><a class="text-decoration-none text-light"
-                        href="{{route('updatecommittee.edit',$committee->committeeID)}}">تعديل بيانات
-                        اللجنة</a></button>
-                <button type="button" class="btn btn-info d-inline "><a class="text-decoration-none text-light"
-                        href="{{route('deletecommittee',$committee->committeeID)}}"> حذف اللجنة</a></button>
+    <!--begin::Main-->
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <!--begin::Content wrapper-->
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <!--begin::Content container-->
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <!--begin::Row-->
+                    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+                        <!--begin::Col-->
+                        <div class="col-xxl-6">
+                            <!--begin::Engage widget 10-->
+                            <div style="background-color: inherit" class="card card-flush h-md-100">
+                                <!--begin::Body-->
+                                <div class="card card-flush mt-6 mt-xl-9">
+                                    <!--begin::Card header-->
+                                    <div class="card-header mt-5">
+                                        <!--begin::Card title-->
+                                        <div class="card-title flex-column">
+                                            <h3 class="fw-bold mb-1">Committees Information</h3>
+                                            <div class="fs-6 text-gray-400">all Committees data from Committee table
+                                            </div>
+                                        </div>
+                                        <!--begin::Card title-->
+                                        <!--begin::Card toolbar-->
+                                        <div class="card-toolbar my-1" data-select2-id="select2-data-159-eyt2">
+                                        </div>
+                                        <!--begin::Card toolbar-->
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">
+                                        <!--begin::Table container-->
+                                        <div class="table-responsive">
+                                            <!--begin::Table-->
+                                            <div id="kt_profile_overview_table_wrapper"
+                                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                                <div class="table-responsive">
+                                                    <div class="container">
+                                                        <div class="card-body py-3">
+                                                            <!--begin::Table container-->
+                                                            <div class="table-responsive">
+                                                                <!--begin::Table-->
+                                                                <table
+                                                                    class="table table-striped hover table-rounded table-row-bordered data-table">
+                                                                    <thead>
+                                                                    <tr class="fw-bold text-muted bg-light">
+                                                                        <th style="padding: 20px" class="min-w-150px">
+                                                                            Committee Name
+                                                                        </th>
+                                                                        <th style="padding: 20px" class="min-w-150px">
+                                                                            Committee Status
+                                                                        </th>
+                                                                        <th style="padding: 20px" class="min-w-150px">
+                                                                            Date
+                                                                        </th>
+                                                                        <th style="padding: 20px" class="min-w-50px">
+                                                                            settings
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                                <!--end::Table-->
+                                                            </div>
+                                                            <!--end::Table container-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Table-->
+                                    </div>
+                                    <!--end::Table container-->
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Engage widget 10-->
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
             </div>
-        </li>
-        @if(!empty($committee->tasks))
-        <ul style="list-style-type:none;">
-            <li>
-                <h6 class="pt-2">مهمات اللجنة:</h6>
-            </li>
-            <li>
-                @php $tasks=$committee->tasks @endphp
-                <ol class="">
-                    @foreach($tasks as $task)
+            <!--end::Content container-->
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Content wrapper-->
+    <!--end:::Main-->
 
-                    <li>{{$task->taskDescription}}</li>
-
-                    @endforeach
-            </li>
-            </ol>
-        </ul>
-        @endif
-
-        @if(!empty($committee->regulations))
-        <ul style="list-style-type:none;">
-            <li>
-                <h6 class="pt-2">ضوابط اللجنة:</h6>
-            </li>
-            <li>
-                @php $regulations=$committee->regulations @endphp
-                <ol>
-                    @foreach($regulations as $regulation)
-
-                    <li>{{$regulation->regulationDescription}}</li>
-
-                    @endforeach
-            </li>
-            </ol>
-        </ul>
-        @endif
-
-        @if(!empty($committee->members))
-        <ul style="list-style-type:none;">
-            <li>
-                <h6 class="pt-2">أعضاء اللجنة:</h6>
-            </li>
-            <li>
-                @php $members=$committee->members @endphp
-                <ol>
-                    @foreach($members as $member)
-                    @php $employees=$member->employee @endphp
-                    <li>{{$employees->employeeName}} بصفته {{$member->memberDescription}}</li>
-                    @endforeach
-            </li>
-            </ol>
-        </ul>
-        @endif
-
-        @if(!empty($committee->sessions))
-        <ul style="list-style-type:none;">
-            <li>
-                <h6 class="pt-2">جلسات اللجنة:</h6>
-            </li>
-            <li>
-                @php $sessions=$committee->sessions @endphp
-                <ol>
-                    @foreach($sessions as $session)
-                    <li class="d-inline">الجلسة رقم {{$session->sessionID}} في تاريخ {{$session->sessionDate}} تبدأ
-                        الساعة {{$session->sessionStartAt}} و تنتهي الساعة {{$session->sessionEndAt}} في قاعة
-                        {{$session->sessionRoom}}</li>
-                    <button type="button" class="btn btn-info d-inline mt-2"><a class="text-decoration-none text-light"
-                            href="{{route('showSessionTopics',['committeeID'=>$committee->committeeID,'sessionID'=>$session->sessionID])}}">مواضيع
-                            النقاش في هذه الجلسة</a></button>
-                    <button type="button" class="btn btn-info d-inline mt-2"><a class="text-decoration-none text-light"
-                            href="{{route('prepareSession',['committeeID'=>$committee->committeeID,'sessionID'=>$session->sessionID])}}">
-                            تحضير مواضيع هذه الجلسة</a></button>
-
-                    <br>
-                    @endforeach
-            </li>
-            </ol>
-        </ul>
-        @endif
-        <hr>
-        @endforeach
-    </ul>
-
-</div>
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-</script>
+
+    <script>
+
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            let table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('showCommittee') }}",
+                columns: [
+                    {data: 'committeeName', className: 'dt-center'},
+                    {
+                        data: 'committeeStatus', className: 'dt-center',
+                        "render": function (data) {
+                            if (data == '1') {
+                                return "<div style='font-size: 15px' class='badge badge-light-success'>نشطة</div>";
+                            } else {
+                                return "<div style='font-size: 15px' class='badge badge-light-danger'>غير نشطة</div>";
+                            }
+                        }
+                    },
+                    {data: 'committeeDate', className: 'dt-center'},
+                    // {data: 'created_at', name: 'created_at'},
+                    // {data: 'updated_at', name: 'updated_at'},
+                    {data: 'settings', className: 'dt-center', orderable: false, searchable: false},
+                ]
+            });
+            $('.data-table').DataTable().columns.adjust();
+        })
+        ;
+
+        let user_id;
+
+        //delete user
+        $('body').on('click', '.swapCommitteeStatus', function () {
+            let committee_id = $(this).data("id");
+            confirmSwap('/user/committees/swapCommitteeStatus', committee_id, '.data-table');
+        });
+
+    </script>
+
 @endsection

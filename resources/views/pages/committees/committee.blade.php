@@ -267,7 +267,7 @@
                         <div class="fs-4 fw-semibold text-gray-700">{{$session->sessionDate}}</div>
                         <span class="badge bg-light text-gray-700 px-3 py-2 me-2">{{$session->sessionRoom}}</span>
                         <!--end::Label-->
-                        @if($session->status == 'dead') <a href="{{route('printReport',$session->sessionID )}}"><span
+                        @if($session->status == 'dead') <a href="{{route('printReport',['committeeID'=>$committee->committeeID ,'sessionID'=>$session->sessionID] )}}"><span
                                 class="btn  btn-outline btn-outline-dashed btn-outline-primary btn-active-primary text-gray-700 px-3 py-2 me-2">معاينة
                                 و طباعة محضر الجلسة</span></a>@endif
                         @if($session->status == 'inProgress')<a

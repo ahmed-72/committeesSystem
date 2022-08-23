@@ -321,7 +321,7 @@ $watining=array();
                                 <!--end::Card title-->
                                 <!--begin::Card toolbar-->
                                 <div class="card-toolbar">
-                                    <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">عرض
+                                    <a href="{{route('showSessionTopics',$committee->committeeID)}}" class="btn btn-bg-light btn-active-color-primary btn-sm">عرض
                                         الكل</a>
                                 </div>
                                 <!--end::Card toolbar-->
@@ -528,7 +528,7 @@ $watining=array();
         data: {
             datasets: [{
                 data: [
-                    <?php echo $done ?>, <?php echo $notDiscussed ?>, <?php echo $tracking ?>, <?php echo $inProgress ?>,
+                    <?php echo $inProgress  ?>, <?php echo  $done ?>, <?php echo $tracking ?>, <?php echo $notDiscussed ?>,
                 ],
                 backgroundColor: ['#009ef7', '#50cd89', '#f1416c', 'gray']
             }],

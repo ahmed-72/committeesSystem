@@ -1,9 +1,26 @@
+ <!--begin::Logo-->
+ <div class="app-sidebar-logo px-6 " id="kt_app_sidebar_logo">
+        <!--begin::Logo image-->
+        <a href="{{route('mainhome')}}">
+        <img src="https://khotaba.palwakf.ps/assets/images/logo.png" class="img-fluid" style=" width:max(250px); height:max(50px)" alt="logo">        </a>
+        <!--end::Logo image-->
+    </div>
+    <!--end::Logo-->
+
+     <!--begin::Logo-->
+ <div class="app-sidebar-logo px-6 " id="kt_app_sidebar_logo">
+        <!--begin::Logo image-->
+        @include('layouts.navbar')
+
+        <!--end::Logo image-->
+    </div>
+    <!--end::Logo-->
 <!--begin:Menu item-->
-<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+<div hidden data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
     class="menu-item here menu-lg-down-accordion menu-here-bg me-0 me-lg-2">
     <!--begin:Menu link-->
     <span class="menu-link">
-        <span class="menu-title">Dashboards</span>
+        <span class="menu-title">الصفحات</span>
         <span class="menu-arrow d-lg-none"></span>
     </span>
     <!--end:Menu link-->
@@ -283,7 +300,7 @@
 
                 </div>
                 <!--end:Col-->
-                f
+               
             </div>
             <!--end:Row-->
         </div>
