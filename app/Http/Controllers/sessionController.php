@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\sessionRequest;
 use App\Models\committee;
+use App\Models\decision;
 use App\Models\discussiontopic;
 use App\Models\employee;
 use App\Models\member;
@@ -14,7 +15,9 @@ use App\Models\User;
 use App\Notifications\sessionNotification;
 use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\VarDumper\Caster\RedisCaster;
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -110,7 +113,7 @@ class sessionController extends Controller
         $session->committee_committeeID =  $request['committeeID'];
         $session->save();
 
-        return redirect()->back();
+        return redirect(route('mySessions'));
     }
 
     /**
@@ -167,7 +170,7 @@ class sessionController extends Controller
             $session->committee_committeeID = $request['committeeID'];
             $session->session_sessionID = $request['sessionID'];
             $session->discussiontopic_topicID  = $request['topicID'][$i];
-            $session->save();
+             $session->save();
             discussiontopic::where('committee_committeeID', $request['committeeID'])->where('topicID', $request['topicID'][$i])->update(['isDiscussed' => 'inProgress']);
         }
 
@@ -189,11 +192,11 @@ class sessionController extends Controller
 
         //send notification
         $session = session::where(['sessionID' => $request['sessionID'], 'committee_committeeID' => $request['committeeID']])->with('committee')->first();
-
         $employees = member::where('committee_committeeID', $request['committeeID'])->with('employee')->get();
 
+
         foreach ($employees as $employee) {
-            $user = User::where('employeeID', $employee->employee_employeeID)->first();
+            $user = User::where('employee_employeeID', $employee->employee_employeeID)->first();
             $user->notify(new sessionNotification($session));
         }
         // dd($employeesPhones); send sms foe all member in this array
@@ -214,6 +217,8 @@ class sessionController extends Controller
         $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
         $members = member::where('committee_committeeID', $committeeID)->orderBy('memberID', 'ASC')->with('employee')->get();
         $topics = sessionTopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->with('committee')->with('discussiontopic')->get();
+        $employees = employee::select('employeeDepartment')->where('employeeDepartment','!=','super-admin')->where('employeeDepartment','!=','admin')->get();
+
         $topicDetails = array();
         $count = 0;
         foreach ($topics as $topic) {
@@ -223,7 +228,7 @@ class sessionController extends Controller
         // dd($session->status);
         if ($session->status == 'ready') {
             $notReady = 0;
-            return view('pages/sessions/sessionReport')->with(['session' => $session, 'members' => $members, 'topics' => $topics, 'topicDetails' => $topicDetails, 'notReady' => $notReady]);
+            return view('pages/sessions/sessionReport')->with(['employees'=>$employees,'session' => $session, 'members' => $members, 'topics' => $topics, 'topicDetails' => $topicDetails, 'notReady' => $notReady]);
         } else {
             $notReady = 1;
 
@@ -241,14 +246,15 @@ class sessionController extends Controller
         $session = session::where('committee_committeeID', $request['committeeID'])->first();
         $this->authorize('chief', $session);
 
-        // dd($request->all());
+        //dd($request('decision-group[1][3]'));
+        //dd($request->all());
         $membersCount = count($request['memberID']);
         $topicsCount = count($request['topicID']);
 
         $request->validate([
             'attendee' => ['required', "min:$membersCount"],
             'deliberation' => ['required', "min:$topicsCount"],
-            'decision' => ['required', "min:$topicsCount"],
+            // 'decision' => ['required', "min:$topicsCount"],
             'tracking' => ['required', "min:$topicsCount"],
             'attendee.*' => ['required'],
             'deliberation.*' => ['required'],
@@ -285,25 +291,102 @@ class sessionController extends Controller
 
         $committeeID =  $request['committeeID'];
         $sessionID = $request['sessionID'];
+        $decisionsArray = [];
+        $executionDepartmentsArray = [];
+        $executionDeadlinesArray = array();
+
         foreach ($request['topicID'] as $topicID) {
-            sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->update([
-                'deliberations' => $request['deliberation'][$topicID],
-                'decisions' => $request['decision'][$topicID],
-                'executionDepartment' => $request['executionDepartment'][$topicID],
-                'executionDeadline' => $request['executionDeadline'][$topicID],
+           
+            $sessiontopic = sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->first();
+            //status
+            discussiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'topicID' => $topicID])->update([
+                'isDiscussed' => $request['tracking'][$topicID],
             ]);
-            //notifications
-            $sessiontopic = sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->with('committee')->first();
-            $department = $request['executionDepartment'][$topicID];
-            $employees = employee::where('employeeDepartment', $department)->get();
-            foreach ($employees as $employee) {
-                $user = User::where('employeeID', $employee->employeeID)->first();
-                $user->notify(new UserNotification($sessiontopic));
+
+            foreach ($request['decisionsGroup'][$topicID] as $decision) {
+                $decisionsArray[] = $decision[0];
+                $executionDepartmentsArray[] = $decision[1];
+                $executionDeadlinesArray[] = $decision[2];
             }
-        }
+           // dd($decisionsArray , $executionDepartmentsArray, $executionDeadlinesArray);
+            DB::table('sessiontopics')
+                ->where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])
+                ->update(['deliberations' => $request['deliberation'][$topicID], 'decisions' => $decisionsArray, 'executionDepartment' => $executionDepartmentsArray, 'executionDeadline' => $executionDeadlinesArray,]);
+                
+                for($i=0;$i<count($decisionsArray);$i++)
+                {
+                    $decision=new decision();
+                    $decision->committee_committeeID= $committeeID;
+                    $decision->session_sessionID= $sessionID;
+                    $decision->discussiontopic_topicID= $topicID;
+                    $decision->decisions =$decisionsArray[$i];
+                    $decision->executionDepartment=$executionDepartmentsArray[$i];
+                    $decision->executionDeadline=$executionDeadlinesArray[$i];
+                    $decision->save();
+                //  dd($decision->toArray());
+                }           
+            //notifications
+             $sessiontopic = sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, 'discussiontopic_topicID' => $topicID])->with('committee')->first();
+             $departments = $sessiontopic->executionDepartment;
+
+             //dd($sessiontopic->decisions);
+            // dd($departments);
+           foreach ($departments as $key=>$department) {
+            $decisionID=$key;
+            $employees=employee::where('employeeDepartment', $department)->get();
+            
+            //dd($employees);
+            foreach ($employees as $employee) {
+                $user = User::where('employee_employeeID', $employee->employeeID)->first();
+                $user->notify(new UserNotification($sessiontopic , $decisionID));
+            }
 
 
+            $decisionsArray = [];
+        $executionDepartmentsArray = [];
+        $executionDeadlinesArray = [];
+        } }
+   /*     dd($executionDepartmentsArray);
+        $sessiontopics = sessiontopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID, ])->with('committee')->get();
+        $x = 0;
+        $c = 0;
+        $employees=[];
+        $topics=[];
+        foreach($sessiontopics as $sessiontopic){ 
+         
 
+        foreach ($sessiontopic->decisions as $key => $decision) { 
+            $decisionID = $key;
+            $department = $sessiontopic->executionDepartment[$key];
+            $employees[$department] = employee::where('employeeDepartment', $department)->get();
+            //dd($employees);
+            $topics[$department]=array($sessiontopic ,$decisionID);
+            // dd($c);
+        }}
+      
+$dd=[];
+        foreach ($employees as $department=>$Demployees) {
+          //  dd($department);
+          // $topics[$department];
+          $dd[]=$department;
+            $topic=$topics[$department][0];
+            $decisionID=$topics[$department][1];
+       
+        foreach ($Demployees as $employee) {
+//dd($Demployees);
+            $c++;
+            $user = User::where('employee_employeeID', $employee->employeeID)->first();
+            $user->notify(new UserNotification($topics[$department][0], $topics[$department][1]));
+            if ($employee->employeeDepartment == 'وكيل الوزارة') {
+                $x++;
+            }
+        }}
+        dd($dd);
+        // dd($x ,$c);
+
+*/
+
+        //attendee
         foreach ($request['attendee'] as $memberID => $attendee) {
             $sessionmember = new sessionmember();
             $sessionmember->committee_committeeID = $committeeID;
@@ -313,7 +396,7 @@ class sessionController extends Controller
             if ($attendee == 'attendant')  $sessionmember->attendee = 'حاضر';
             else if ($attendee == 'absent') $sessionmember->attendee = 'متغيب';
             else if ($attendee == 'apologized') $sessionmember->attendee = 'معتذر';
-              $sessionmember->save();
+             $sessionmember->save();
         }
         foreach ($request['tracking'] as $topicID => $status) {
 
@@ -321,12 +404,12 @@ class sessionController extends Controller
                 'isDiscussed' => $status,
             ]);
         }
-        session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->update(['status' => 'dead']);
+        // session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->update(['status' => 'dead']);
 
 
         $user = Auth::user();
 
-        return redirect()->back();
+        return redirect(route('addSession.create',$committeeID));
     }
 
 
@@ -336,7 +419,7 @@ class sessionController extends Controller
     {
         $session = session::where('committee_committeeID', $committeeID)->first();
         $this->authorize('member', $session);
-        
+
         $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
         $members = sessionmember::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->orderBy('member_memberID', 'ASC')->with('member')->get();
         //dd($members->member->employee->employeeName);
@@ -350,7 +433,7 @@ class sessionController extends Controller
 
         if ($session->status == 'dead') {
             $notReady = 0;
-           
+
             return view('pages/sessions/printReport')->with(['session' => $session, 'members' => $members, 'topics' => $topics, 'topicDetails' => $topicDetails, 'notReady' => $notReady]);
         } else {
             $notReady = 1;

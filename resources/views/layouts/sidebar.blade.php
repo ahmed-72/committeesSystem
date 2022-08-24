@@ -1,10 +1,13 @@
 <?php $current=url()->current() ;
 $home=$users=$roles=$committee=$session="";
 if($current==route('mainhome')) $home= $current;
-if($current==route('roles.index')||$current==route('roles.create')||$current==route('roleUser.index')||$current==route('roleUser.create')) $roles= $current;
-if($current==route('addUser')||$current==route('showUsers')) $users= $current;
-if($current==route('showCommittee')||$current==route('allCommittee')||$current==route('addCommittee.create')) $committee= $current;
-if($current==route('mySessions')) $session= $current;
+//if($current==route('roles.index')||$current==route('roles.create')||$current==route('roleUser.index')||$current==route('roleUser.create')) $roles= $current;
+//if($current==route('addUser')||$current==route('showUsers')) $users= $current;
+//if($current==route('showCommittee')||$current==route('allCommittee')||$current==route('addCommittee.create')) $committee= $current;
+if( str_contains($current ,'ole')) $roles= $current;
+if(str_contains($current ,'ser')) $users= $current;
+if(str_contains($current ,'ommittee')) $committee= $current;
+if( str_contains($current ,'ession')) $session= $current;
 
 
 ?>

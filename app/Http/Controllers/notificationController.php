@@ -14,10 +14,17 @@ class notificationController extends Controller
     {
         $user = Auth::user();
         // dd($user->notifications->toArray());
+        $beforMonth = date("Y-m-d H:i:s", strtotime('-30 days'));
+        foreach($user->notifications as $notification ){
+            if($notification->created_at < $beforMonth && $notification->created_at != null  ){
+                $notification->delete();
+            }
+        }
         return view('pages/committees/notifications')->with('notifications', $user->notifications);
     }
     public function show($notificationID)
     {
+
         $user = Auth::user();
         $notification = $user->notifications->find($notificationID);
         if($notification && $notification->unread() ){

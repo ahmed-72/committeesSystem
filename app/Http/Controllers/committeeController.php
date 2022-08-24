@@ -703,4 +703,8 @@ class CommitteeController extends Controller
         // dd($committee);
         return redirect()->route('showCommittee');
     }
+    public function aa($cid,$sid,$tid){
+        $sessiontopics=sessiontopic::where(['committee_committeeID' => $cid, 'session_sessionID' => $sid,])->get();
+return view('pages/sessions/aa')->with('sessiontopics',$sessiontopics);
+    }
 }

@@ -153,6 +153,28 @@ $committeeCount=member::where('employee_employeeID',$user->employee_employeeID)-
 home page
 */
   public function home(){
+    
+    $today = date('Y-m-d');
+    $afterThreeDays = date('Y-m-d', strtotime('+3 days'));
+    $beforThreeDays = date('Y-m-d', strtotime('-3 days'));
+
+    $sessions = session::where('sessionDate', '>', $today)->where('sessionDate', '<', $afterThreeDays)->get();
+    foreach ($sessions as $session) {
+        $session->status = 'inProgress';
+        $session->save();
+    }
+
+    $oldSessions = session::where('sessionDate', '<', $today)->get();
+    foreach ($oldSessions as $oldSession) {
+        $oldSession->status = 'dead';
+        $oldSession->save();
+    }
+
+    $todaySessions = session::where('sessionDate', '=', $today)->get();
+    foreach ($todaySessions as $todaySessions) {
+        $todaySessions->status = 'ready';
+        $todaySessions->save();
+    }
 
     $employeeID = Auth::user()->employee_employeeID;
     $today = date('Y-m-d');

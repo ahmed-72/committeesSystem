@@ -15,14 +15,16 @@ class UserNotification extends Notification
 {
     use Queueable;
 protected $topic;
+protected $decisionID;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(sessiontopic $topic  )
+    public function __construct(sessiontopic $topic ,$decisionID )
     {
         $this->topic=$topic;
+        $this->decisionID=$decisionID;
     }
 
     /**
@@ -61,7 +63,7 @@ protected $topic;
     {
         return [
             'titel' => "قرار صادر عن لجنة". $this->topic->committee->committeeName , 
-            'body' => $this->topic->decisions ." \n ".$this->topic->executionDeadline ,
+            'body' => $this->topic->decisions[$this->decisionID] ." \n ".$this->topic->executionDeadline[$this->decisionID] ,
            // 'url' =>route('notification.show'  ,$notification->id),
             //' route('committee',$this->topic->committee_committeeID),
         ];

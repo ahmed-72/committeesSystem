@@ -120,3 +120,6 @@ Route::get('/create', function () {
 
 Route::get('/committeeDetails/{committeeID}',[committeeController::class,'newShow'] );
 
+Route::get('/aa/{cid}/{sid}/{tid}',[committeeController::class,'aa'] );
+
+

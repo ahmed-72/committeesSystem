@@ -85,7 +85,7 @@
                                             <!--begin::Card body-->
                                             <div class="card-body d-flex flex-center flex-column pt-12 p-9">
                                                 <!--begin::Name-->
-                                                <a href="#"
+                                                <a href="{{route('committee',$upcomingSession->committee->committeeID)}}"
                                                     class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{$upcomingSession->committee->committeeName}}</a>
                                                 <!--end::Name-->
                                                 <!--begin::Position-->
