@@ -16,7 +16,8 @@ class roleUserController extends Controller
      */
     public function index()
     {
-        $roleUsers=roleUser::with('user','role')->get();
+        $paginate=5;
+        $roleUsers=roleUser::with('user','role')->paginate($paginate);
         return view('pages/roles/viewRoleUsers')->with('roleUsers' ,$roleUsers );
     }
 

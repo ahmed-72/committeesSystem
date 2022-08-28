@@ -115,6 +115,9 @@ li {
                                 </tbody>
                             </table>
                         </div>
+                        <div class="d-flex aligan-items-center m-4">
+        {{ $roleUsers->links("pagination::bootstrap-5") }}
+    </div>
                     </div>
                     <!--end::Card body-->
                 </div>
@@ -136,6 +139,7 @@ li {
         <!--end::Contacts App- Add New Contact-->
     </div>
     <!--end::Content container-->
+
 </div>
 @endsection
 

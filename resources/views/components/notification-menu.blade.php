@@ -46,7 +46,7 @@
         @php $count=0 @endphp
         <ul>
             @foreach($notifications as $notification)
-            @if($count < 3) <div class="menu-item px-3 my-0">
+            @if($count < 3) <div class="menu-item px-3 my-0 <?php if($notification->unread()) echo" bg-opacity-15 bg-primary" ?>">
                 <a href="{{route('notification.show'  ,['notificationID'=>$notification->id])}}"
                     class="menu-link px-3 py-2">
 

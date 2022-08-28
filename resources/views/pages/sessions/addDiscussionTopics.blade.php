@@ -1,31 +1,9 @@
-<!-- <!DOCTYPE html>
-<html lang="ar">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
-        integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/pricing/">
-
-    <!- - Bootstrap core CSS - ->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <title>Document</title>
-
-</head>
-
-<body dir="rtl"> -->
-
 @extends('pages.parent')
 
-@section('title','Wellcome to Dashboard')
 
-@section('page_name','Demo')
-@section('main_path','Demo')
-@section('sub_path','Demo')
+@section('page_name','اضافة مواضيع للنقاش')
+@section('main_path','اللجان')
+@section('sub_path','اضافة مواضيع للنقاش')
 
 @section('styles')
 
@@ -34,33 +12,37 @@
 @section('content')
 
 
-    @if($errors->any())
-    <ul class="alert alert-danger col-6">
-        @foreach($errors->all() as $message)
-        <li>{{$message}}</li>
-        @endforeach
-    </ul>
-    @endif
-    
-    @if(session()->has('session'))
-    <h5 class="col-9 alert alert-danger">{{session('session')}}</h5>
-    
-    @endif
+@if($errors->any())
+<ul class="alert alert-danger col-6">
+    @foreach($errors->all() as $message)
+    <li>{{$message}}</li>
+    @endforeach
+</ul>
+@endif
 
-    <div class="form-group" dir="rtl">
+@if(session()->has('session'))
+<h5 class="col-9 alert alert-danger">{{session('session')}}</h5>
+
+@endif
+
+<div class="form-group" dir="rtl">
+    <div class="card card-flush h-md-100 col-9 px-4 fs-4">
+
         <form action="{{route('addDiscussionTopics.store')}}" id="form" method="POST">
             @csrf
             <div class="col-7 mr-auto  ml-3 mt-3">
                 <h4>أضف موضوعاً لمناقشته في الجلسة القادمة</h4>
                 <hr>
                 <div class="mt-3">
-                    <label for="committeeID">رقم اللجنة</label>
-                    <input class="form-control" type="text" name="committeeID" id="{{$committee->committeeID}}" readonly value="{{$committee->committeeID}}">
-                    <input class="form-control" type="text" name="committeeName" id="{{$committee->committeeName}}" readonly value="{{$committee->committeeName}}">
+                    <label for="committeeID">اسم و رقم اللجنة</label>
+                    <input class="form-control" type="text" name="committeeID" id="{{$committee->committeeID}}" readonly
+                        value="{{$committee->committeeID}}">
+                        <input class="form-control" type="text" name="committeNanme" id="{{$committee->committeeID}}" readonly
+                        value="{{$committee->committeeName}}">
                 </div>
 
                 <!-- begin topics -->
-                <div class="repeater mt-2" >
+                <div class="repeater mt-2">
                     <hr>
 
                     <div data-repeater-list="TopicsGroup">
@@ -71,35 +53,48 @@
                                     <label for="TopicDescription">البند</label>
                                 </div>
                                 <div class="col-auto ">
-                                    <input class="form-control" type="text" name="TopicDescription"
+                                    <input class="form-control" type="text" name="TopicDescription" required
                                         id="TopicDescription">
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-auto fs-4">
                                     <label for="ResolutionDescription">مشروع القرار المقترح</label>
                                 </div>
                                 <div class="col-auto ">
-                                    <input class="form-control" type="text" name="ResolutionDescription"
+                                    <input class="form-control" type="text" name="ResolutionDescription" required
                                         id="ResolutionDescription">
                                 </div>
-                                <div class="col-auto ">
-                                    <input data-repeater-delete type="button" class="btn btn-danger" value="Delete" />
+                                <div class="col-sm-auto ">
+                                    <button data-repeater-delete type="button"
+                                        class="btn btn-outline-danger border border-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z">
+                                            </path>
+                                            <path fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
+                                            </path>
+                                        </svg>
+                                        حذف
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <input data-repeater-create type="button" class="btn btn-info" value="Add" />
+                    <input data-repeater-create type="button" class="btn btn-info" value="أضافة موضوع آخر" />
                 </div>
                 <!-- end Topics -->
-                
+
                 <div class="col-5">
                     <hr>
-                    <input type="submit" class="btn btn-primary mb-2 ml-5 pl-5 pr-5" value="إضافة">
+                    <input type="submit" class="btn btn-primary mb-2 ml-5 pl-5 pr-5" value="حفظ">
                 </div>
             </div>
         </form>
     </div>
+</div>
 
-    @endsection
+@endsection
 
 @section('scripts')
 
@@ -121,7 +116,7 @@ $(document).ready(function() {
         show: function() {
             $(this).slideDown();
             console.log($(this).find('input')[1]);
-            $('#cat-id').val(window.id);         
+            $('#cat-id').val(window.id);
         },
         hide: function(deleteElement) {
             if (confirm('هل أنت متأكد من أنك تريد حذف هذا العنصر؟')) {
@@ -131,8 +126,7 @@ $(document).ready(function() {
                 console.log($('.repeater').repeaterVal());
             }
         },
-        ready: function(setIndexes) {
-        }
+        ready: function(setIndexes) {}
     });
 });
 </script>

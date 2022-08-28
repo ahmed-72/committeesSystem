@@ -1,11 +1,9 @@
 @extends('pages.parent')
 
-@section('title','Wellcome to Dashboard')
+@section('page_name','الأعضاء')
 
-@section('page_name','Users')
-
-@section('main_path','Users')
-@section('sub_path','Update User')
+@section('main_path','الأعضاء')
+@section('sub_path','تعديل بيانات عضو')
 
 
 @section('styles')

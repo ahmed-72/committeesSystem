@@ -56,7 +56,7 @@ class CommitteeController extends Controller
 
     public function indexAll()
     {
-
+       
         $committees = committee::withoutTrashed()->where(['status' => 'active'])->with('tasks')->with('regulations')->with('members')->with('sessions')->get();
 
         // dd($myCommittees);
@@ -598,7 +598,7 @@ class CommitteeController extends Controller
         ]);
         $committeeID = $request['committeeID'];
         $date = date('Y-m-d');
-        $session = session::orderBy('sessionDate')->where('committee_committeeID', $committeeID)->where('sessionDate', '>', $date)->first();
+        $session = session::where('committee_committeeID', $committeeID)->where('sessionDate', '>=', $date)->first();
 
         if ($session == null) {
             return redirect()->back()->with('session', 'لا يوجد جلسات قادمة لهذه اللجنة');
@@ -643,7 +643,7 @@ class CommitteeController extends Controller
             $count++;
         }
 
-        return redirect()->back();
+        return redirect(route('committee',$committeeID));
     }
 
 

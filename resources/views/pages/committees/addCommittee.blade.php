@@ -2,9 +2,9 @@
 
 @section('title','Wellcome to Dashboard')
 
-@section('page_name','Demo')
-@section('main_path','Demo')
-@section('sub_path','Demo')
+@section('page_name','اللجان')
+@section('main_path','اللجان')
+@section('sub_path','إنشاء لجنة جديدة')
 
 @section('styles')
 <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
@@ -64,7 +64,7 @@ th {
                                 <span>رقم اللجنة</span>
                             </label>
                             <input type="text" class="fs-3 form-control form-control-solid border" name="commNumber"
-                                id="commNumber">
+                                id="commNumber" required>
                         </div>
 
                     </div>
@@ -75,7 +75,7 @@ th {
                                 <span>تاريخ اصدار قرار انشاء اللجنة</span>
                             </label>
                             <input type="date" class="fs-3 form-control form-control-solid border" name="commDate"
-                                id="commDate">
+                                id="commDate" required>
                         </div>
 
                     </div>
@@ -122,9 +122,9 @@ th {
                                     </div> -->
                                     <div class=" col-auto">
                                         <input class=" fs-3 form-control form-control-solid border ml-3 mr-5"
-                                            name="memberName" id="memberName" list="brow"
+                                            name="memberName" id="memberName" list="brow" required
                                             value="<?php if ($errors->any()) echo old('membersGroup.0.memberName'); ?>">
-                                        <datalist type="inset" id="brow" name="brow">
+                                        <datalist type="inset" id="brow" name="brow"  >
                                             @foreach($employees as $employee)
                                             <option id="{{$employee->employeeID}}" value="{{$employee->employeeName}}">
                                                 @endforeach
@@ -134,7 +134,7 @@ th {
 
                                         <select aria-hidden="true"
                                             class="fs-3 form-control form-control-solid border w-auto ml-5"
-                                            name="memberDescription" id="memberDescription">
+                                            name="memberDescription" id="memberDescription" required>
                                             <option value=""></option>
                                             <option value="رئيس اللجنة">رئيس اللجنة</option>
                                             <option value="نائب رئيس اللجنة">نائب رئيس اللجنة</option>
@@ -159,7 +159,7 @@ th {
                                                     d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
                                                 </path>
                                             </svg>
-                                            Delete
+                                            حذف
                                         </button>
 
                                     </div>
@@ -200,7 +200,7 @@ th {
                                     <label class="fs-3 form-label mt-3" for="taskDescription">وصف المهمة</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input class="fs-3 form-control form-control-solid border" type="text"
+                                    <input class="fs-3 form-control form-control-solid border" type="text" required
                                         name="taskDescription" id="taskDescription"
                                         value="<?php if ($errors->any()) echo old('tasksGroup.0.taskDescription'); ?>">
                                 </div>
@@ -216,7 +216,7 @@ th {
                                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
                                             </path>
                                         </svg>
-                                        Delete
+                                        حذف
                                     </button>
                                 </div>
                             </div>
@@ -255,7 +255,7 @@ th {
                                     <label class="fs-3 form-label mt-3" for="regulationDescription">وصف الضابط</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input class="fs-3 form-control form-control-solid border" type="text"
+                                    <input class="fs-3 form-control form-control-solid border" type="text" required
                                         name="regulationDescription" id="regulationDescription"
                                         value="<?php if ($errors->any()) echo old('regulationsGroup.0.regulationDescription'); ?>">
                                 </div>
@@ -271,7 +271,7 @@ th {
                                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
                                             </path>
                                         </svg>
-                                        Delete
+                                        حذف
                                     </button>
                                 </div>
                             </div>
@@ -305,7 +305,7 @@ th {
             
                     <div class="custom-control custom-radio custom-control-inline col-md-3 mb-3">
                         <input type="radio" id="Regular" value="1" name="isRegular"  class="form-check-input h-25px w-25px">
-                        <label class="fs-3 form-check-label px-3" for="Regular">نعم</label>
+                        <label class="fs-3 form-check-label px-3" for="Regular" required>نعم</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline col-md-3 mb-3">
                         <input type="radio" id="NonRegular" value="0" name="isRegular" class="form-check-input h-25px w-25px">

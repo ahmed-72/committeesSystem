@@ -90,36 +90,7 @@
                                                 <!--end::Name-->
                                                 <!--begin::Position-->
                                                 <?php $created_at=$upcomingSession->created_at->diffForHumans() ; 
-                                                $number=substr($upcomingSession->created_at->diffForHumans(),0,2) ;
-                                              
-                                                if (str_contains($created_at, 'day')&& $number=='1 ') 
-                                                $created_at='يومٍ مضى'; 
-                                                elseif (str_contains($created_at, 'days')&& $number=='2 ') 
-                                                $created_at='يومين مضيا';
-                                                elseif (str_contains($created_at, 'days')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'أيامٍ مضت';
-
-                                                elseif (str_contains($created_at, 'week')&& $number=='1 ') 
-                                                $created_at='أسبوعٍ مضى'; 
-                                                elseif (str_contains($created_at, 'weeks')&& $number=='2 ') 
-                                                $created_at='أسبوعين مضيا';
-                                                elseif (str_contains($created_at, 'weeks')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'أسابيعٍ مضت';
-
-                                                elseif (str_contains($created_at, 'month')&& $number=='1 ') 
-                                                $created_at='شهرٍ مضى'; 
-                                                elseif (str_contains($created_at, 'months')&& $number=='2 ') 
-                                                $created_at='شهرين مضيا';
-                                                elseif (str_contains($created_at, 'months')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'أشهرٍ مضت';
                                                 
-                                                elseif (str_contains($created_at, 'year')&& $number=='1 ') 
-                                                $created_at='سنةٍ مضى'; 
-                                                elseif (str_contains($created_at, 'years')&& $number=='2 ') 
-                                                $created_at='سنتين مضتا';
-                                                elseif (str_contains($created_at, 'years')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'سنينٍ مضت';
-
                                                 ?>
                                                 <div class="fw-semibold text-gray-400 mb-6"> جلسة رقم
                                                     {{$upcomingSession->sessionID}} أنشئت قبل {{$created_at}}</div>
@@ -197,37 +168,8 @@
                                                     class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{$previousSession->committee->committeeName}}</a>
                                                 <!--end::Name-->
                                                 <!--begin::Position-->
-                                                <?php $created_at=$upcomingSession->created_at->diffForHumans() ; 
-                                                $number=substr($upcomingSession->created_at->diffForHumans(),0,2) ;
-                                              
-                                                if (str_contains($created_at, 'day')&& $number=='1 ') 
-                                                $created_at='يومٍ مضى'; 
-                                                elseif (str_contains($created_at, 'days')&& $number=='2 ') 
-                                                $created_at='يومين مضيا';
-                                                elseif (str_contains($created_at, 'days')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'أيامٍ مضت';
-
-                                                elseif (str_contains($created_at, 'week')&& $number=='1 ') 
-                                                $created_at='أسبوعٍ مضى'; 
-                                                elseif (str_contains($created_at, 'weeks')&& $number=='2 ') 
-                                                $created_at='أسبوعين مضيا';
-                                                elseif (str_contains($created_at, 'weeks')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'أسابيعٍ مضت';
-
-                                                elseif (str_contains($created_at, 'month')&& $number=='1 ') 
-                                                $created_at='شهرٍ مضى'; 
-                                                elseif (str_contains($created_at, 'months')&& $number=='2 ') 
-                                                $created_at='شهرين مضيا';
-                                                elseif (str_contains($created_at, 'months')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'أشهرٍ مضت';
+                                                <?php $created_at=$previousSession->created_at->diffForHumans() ; 
                                                 
-                                                elseif (str_contains($created_at, 'year')&& $number=='1 ') 
-                                                $created_at='سنةٍ مضى'; 
-                                                elseif (str_contains($created_at, 'years')&& $number=='2 ') 
-                                                $created_at='سنتين مضتا';
-                                                elseif (str_contains($created_at, 'years')&& $number!='1 '&& $number!='2 ') 
-                                                $created_at=$number.'سنينٍ مضت';
-
                                                 ?>
                                                 <div class="fw-semibold text-gray-400 mb-6"> جلسة رقم
                                                     {{$previousSession->sessionID}} أنشئت قبل {{$created_at}}</div>
@@ -289,6 +231,7 @@
         </div>
         <!--end::Contacts App- Add New Contact-->
     </div>
+
     <!--end::Content container-->
 </div>
 

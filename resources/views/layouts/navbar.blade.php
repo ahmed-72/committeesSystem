@@ -53,8 +53,8 @@
                     <!--end::Avatar-->
                     <!--begin::Username-->
                     <div class="d-flex flex-column">
-                        <div class="fw-bold d-flex align-items-center fs-5">{{Auth::user()->name}}
-                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">active</span>
+                        <div class="fw-bold d-flex align-items-center fs-5">{{Auth::user()->employee->employeeName}}
+                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">نشط</span>
                         </div>
                         <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
                     </div>

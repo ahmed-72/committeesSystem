@@ -138,7 +138,7 @@ $watining=array();
                                                         </div>
                                                         <!--end::Number-->
                                                         <!--begin::Label-->
-                                                        <div class="fw-semibold fs-6 text-gray-400">رقم اللجنة
+                                                        <div class="fw-semibold fs-6 text-gray-600">رقم اللجنة
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -153,7 +153,7 @@ $watining=array();
                                                         </div>
                                                         <!--end::Number-->
                                                         <!--begin::Label-->
-                                                        <div class="fw-semibold fs-6 text-gray-400">تاريخ اصدار قرار
+                                                        <div class="fw-semibold fs-6 text-gray-600">تاريخ اصدار قرار
                                                             انشاء اللجنة
                                                         </div>
                                                         <!--end::Label-->
@@ -173,7 +173,7 @@ $watining=array();
                                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
-                                        <a class="fonts nav-link text-active-primary ms-0 me-10 py-5" href="">المعلومات الاساسية</a>
+                                        <a class="fonts nav-link text-active-primary ms-0 me-10 py-5 active" href="#">المعلومات الاساسية</a>
                                     </li>
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
@@ -188,7 +188,7 @@ $watining=array();
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
-                                        <a class="fonts nav-link text-active-primary ms-0 me-10 py-5 active" href="#regulations">الضوابط</a>
+                                        <a class="fonts nav-link text-active-primary ms-0 me-10 py-5 " href="#regulations">الضوابط</a>
                                     </li>
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
@@ -205,13 +205,13 @@ $watining=array();
                     </div>
 
 
-                    <div class="col-lg-10">
+                    <div class="col-lg-10" >
                         <!--begin::Engage widget 10-->
-                        <div class="card card-flush h-md-100">
+                        <div class="card card-flush h-md-100" id="members">
                             <!--begin::Body-->
                             <div class="card-header">
                                 <!--begin::Card header-->
-                                <div class="card-title fs-3 fw-bold" id="members">تفاصيل الأعضاء</div>
+                                <div class="card-title fs-3 fw-bold" >تفاصيل الأعضاء</div>
                                 <!--end::Card header-->
                             </div>
                             <div style="padding: 0 50px 50px" class="table-responsive">
@@ -316,7 +316,7 @@ $watining=array();
                                 <!--begin::Card title-->
                                 <div class="card-title flex-column">
                                     <h3 class="fw-bold mb-1">المواضيع الحالية</h3>
-                                    <div class="fs-6 text-gray-400">اجمالي <?php echo $notDiscussed + $tracking ?> موضوع بانتظار مناقشتها</div>
+                                    <div class="fs-6 text-gray-600">اجمالي <?php echo $notDiscussed + $tracking ?> موضوع بانتظار مناقشتها</div>
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Card toolbar-->
@@ -341,7 +341,7 @@ $watining=array();
                                     <div class="fw-semibold">
                                         <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$wati->topicDescription}}</a>
                                         <!--begin::Info-->
-                                        <div class="text-gray-400">
+                                        <div class="text-gray-600">
                                             <a href="#">{{$wati->ResolutionDescription}}</a>
                                         </div>
                                         <!--end::Info-->
@@ -367,8 +367,7 @@ $watining=array();
                                 <!--end::Card title-->
                                 <!--begin::Card toolbar-->
                                 <div class="card-toolbar">
-                                    <a href="{{route('showSessionTopics',$committee->committeeID)}}" class="btn btn-light btn-sm">عرض
-                                        المواضيع</a>
+                                    <a href="{{route('showSessionTopics',$committee->committeeID)}}" class="btn btn-light btn-sm">عرض الكل</a>
                                 </div>
                                 <!--end::Card toolbar-->
                             </div>
@@ -381,7 +380,7 @@ $watining=array();
                                     <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
                                         <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
                                             <span class="fs-2qx fw-bold">{{$committee->discussiontopics->count()}}</span>
-                                            <span class="fs-6 fw-semibold text-gray-400">اجمالي المواضيع</span>
+                                            <span class="fs-6 fw-semibold text-gray-600">اجمالي المواضيع</span>
                                         </div>
                                         <canvas id="project_overview_chart" width="175" height="175" style="display: block; box-sizing: border-box; height: 175px; width: 175px;"></canvas>
                                     </div>
@@ -391,30 +390,30 @@ $watining=array();
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                             <div class="bullet bg-primary me-3"></div>
-                                            <div class="sumTaskStatus text-gray-400">نشطة</div>
-                                            <div id="topicActive" class="sumTaskNums ms-auto fw-bold text-gray-700"></div>
+                                            <div class="sumTaskStatus text-gray-600">نشطة</div>
+                                            <div id="topicActive" class="sumTaskNums ms-auto fw-bold text-gray-900"></div>
                                         </div>
                                         <!--end::Label-->
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                             <div class="bullet bg-success me-3"></div>
-                                            <div class="sumTaskStatus text-gray-400">مكتملة
+                                            <div class="sumTaskStatus text-gray-600">مكتملة
                                             </div>
-                                            <div id="topicCompleted" class="sumTaskNums ms-auto fw-bold text-gray-700"></div>
+                                            <div id="topicCompleted" class="sumTaskNums ms-auto fw-bold text-gray-900"></div>
                                         </div>
                                         <!--end::Label-->
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                             <div class="bullet bg-danger me-3"></div>
-                                            <div class="sumTaskStatus text-gray-400">متأخرة</div>
-                                            <div id="topicLater" class="sumTaskNums ms-auto fw-bold text-gray-700"></div>
+                                            <div class="sumTaskStatus text-gray-600">متأخرة</div>
+                                            <div id="topicLater" class="sumTaskNums ms-auto fw-bold text-gray-900"></div>
                                         </div>
                                         <!--end::Label-->
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-semibold align-items-center">
                                             <div style="color: gray" class="bullet bg-gray-300 me-3"></div>
-                                            <div class="sumTaskStatus text-gray-400">لم يتم مناقشتها</div>
-                                            <div id="noYet" class="sumTaskNums ms-auto fw-bold text-gray-700"></div>
+                                            <div class="sumTaskStatus text-gray-600">لم يتم مناقشتها</div>
+                                            <div id="noYet" class="sumTaskNums ms-auto fw-bold text-gray-900"></div>
                                         </div>
                                         <!--end::Label-->
                                     </div>
@@ -435,11 +434,12 @@ $watining=array();
                                 <!--begin::Card title-->
                                 <div class="card-title flex-column">
                                     <h3 class="fw-bold mb-1">الجلسات القادمة</h3>
-                                    <div class="fs-6 text-gray-400">اجمالي 40 جلسة قادمة</div>
+                                    @if(count($nearSessions)>0)
+                                    <div class="fs-6 text-gray-600">اجمالي الجلسات القادمة : {{count($nearSessions)}} </div>
                                     <br>
                                     <a href="{{route('addSession.create',$committee->committeeID)}}" class="btn btn-sm btn-primary me-3">انشاء
                                         جلسة</a><br>
-                                    <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">المخطط الزمني للجلسات</a>
+                                    <a href="{{route('showSessions',$committee->committeeID)}}" class="btn btn-sm btn-primary me-3">عرض كافة الجلسات</a>
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Card toolbar-->
@@ -461,23 +461,22 @@ $watining=array();
                                                 <!--end::Title-->
                                                 <!--begin::Time-->
                                                 <div class="fs-5">{{$session->sessionStartAt}}
-                                                    <span class="fs-7 text-gray-400 text-uppercase">pm</span>
+                                                    <span class="fs-7 text-gray-600 text-uppercase">pm</span>
                                                 </div>
                                                 <!--end::Time-->
-                                                <!--begin::User-->
-                                                <div class="text-gray-400">يرئسها
-                                                    <a href="#">{{$committee->committeeName}}</a>
-                                                </div>
-                                                <!--end::User-->
+                                                
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            <a class="btn btn-bg-light btn-active-color-primary btn-sm">
+                                            
                                                 @if($session->status == 'ready')
+                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm" href="{{route('sessionReport.create',['committeeID'=>$session->committee_committeeID ,'sessionID'=>$session->sessionID])}}">
                                                 افتتاح الجلسة
                                                 @elseif($session->status == 'dead')
+                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm"  href="{{route('printReport',['committeeID'=>$session->committee_committeeID ,'sessionID'=>$session->sessionID])}}">
                                                 معاينة وطباعة محضر الجلسة
-                                                @elseif($session->status == 'inProgress')
+                                                @elseif($session->status == 'inProgress') 
+                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm"  href="{{route('prepareSession',['committeeID'=>$session->committee_committeeID ,'sessionID'=>$session->sessionID])}}"> 
                                                 تحضير
                                                 @else
                                                 @endif
@@ -490,12 +489,19 @@ $watining=array();
                                     <!--end::Day-->
                                 </div>
                                 <!--end::Card toolbar-->
+                                @else 
+                                <div class="fs-6 text-gray-600">ليس هنالك أي جلسات قادمة قريبة </div>
+                                    <br>
+                                @endif
                             </div>
                             <!--end::Card header-->
+                            
                         </div>
                         <!--end::Card-->
+                        
                     </div>
                     <!--end::Col-->
+        
                 </div>
                 <!--end::Row-->
             </div>

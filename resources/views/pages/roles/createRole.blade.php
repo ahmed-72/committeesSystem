@@ -90,14 +90,14 @@
                            
                             <div class="alignCards card card-flush shadow-sm">
                                 <div class="card-header">
-                                    <h1 style="font-size: 30px" class="card-title">المستخدمين</h1>
+                                    <h1 style="font-size: 25px" class="card-title">المستخدمين</h1>
                                 </div>
                                  @foreach($value as $key1=>$value1)
                                 <div class="card-body py-5">
                                     <div class="marTopForCheckBoxes form-check form-check-custom form-check-solid">
                                         <input class="form-check-input" type="checkbox" value="{{$key1}}"
                                             name="abilities[]" id="flexCheckDefault" />
-                                        <label class="changeFontSize form-check-label">{{$value1}}</label>
+                                        <label class="changeFontSize form-check-label" style="font-size: 15px" >{{$value1}}</label>
                                     </div>
                                 </div> @endforeach
                             </div>
@@ -106,13 +106,13 @@
                             
                             <div class="alignCards card card-flush shadow-sm">
                                 <div class="card-header">
-                                    <h1 style="font-size: 30px" class="card-title">اللجان</h1>
+                                    <h1 style="font-size: 25px" class="card-title">اللجان</h1>
                                 </div>@foreach($value as $key1=>$value1)
                                 <div class="card-body py-5">
                                     <div class="marTopForCheckBoxes form-check form-check-custom form-check-solid">
                                         <input class="form-check-input" type="checkbox" value="{{$key1}}"
                                             name="abilities[]" id="flexCheckDefault" />
-                                        <label class="changeFontSize form-check-label">{{$value1}}</label>
+                                        <label class="changeFontSize form-check-label" style="font-size: 15px" >{{$value1}}</label>
                                     </div>
                                 </div>@endforeach
                             </div>
@@ -121,13 +121,13 @@
                             
                             <div class="alignCards card card-flush shadow-sm">
                                 <div class="card-header">
-                                    <h1 style="font-size: 30px" class="card-title">الجلسات</h1>
+                                    <h1 style="font-size: 25px" class="card-title">الجلسات</h1>
                                 </div>@foreach($value as $key1=>$value1)
                                 <div class="card-body py-5">
                                     <div class="marTopForCheckBoxes form-check form-check-custom form-check-solid">
                                         <input class="form-check-input" type="checkbox" value="{{$key1}}"
                                             name="abilities[]" id="flexCheckDefault" />
-                                        <label class="changeFontSize form-check-label">{{$value1}}</label>
+                                        <label class="changeFontSize form-check-label" style="font-size: 15px" >{{$value1}}</label>
                                     </div>
                                 </div> @endforeach
                             </div>
@@ -136,13 +136,13 @@
                            
                             <div class="alignCards card card-flush shadow-sm">
                                 <div class="card-header">
-                                    <h1 style="font-size: 30px" class="card-title">الصلاحيات</h1>
+                                    <h1 style="font-size: 25px" class="card-title">الصلاحيات</h1>
                                 </div> @foreach($value as $key1=>$value1)
                                 <div class="card-body py-5">
                                     <div class="marTopForCheckBoxes form-check form-check-custom form-check-solid">
                                         <input class="form-check-input" type="checkbox" value="{{$key1}}"
                                             name="abilities[]" id="flexCheckDefault" />
-                                        <label class="changeFontSize form-check-label">{{$value1}}</label>
+                                        <label class="changeFontSize form-check-label" style="font-size: 15px" >{{$value1}}</label>
                                     </div>
                                 </div> @endforeach
                             </div>

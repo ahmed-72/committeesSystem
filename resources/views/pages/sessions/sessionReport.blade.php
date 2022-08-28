@@ -189,8 +189,8 @@ input.readonly {
                                                     <td>
                                                         <div class="d-flex align-items-center">
                                                             <div class="d-flex justify-content-start flex-column">
-                                                                <input type="text" name="memberID[]"
-                                                                    class="text-dark fw-bold text-hover-primary fs-6"
+                                                                <input type="text" name="memberID[]" 
+                                                                    class="text-dark fw-bold text-hover-primary  fs-6" style="width:30px ;"
                                                                     readonly value="{{$member->memberID}}">
                                                             </div>
                                                         </div>
@@ -211,7 +211,7 @@ input.readonly {
                                                         <div class="align-items-center">
                                                             <div style="display: inline-block"
                                                                 class="form-check form-check-custom form-check-success form-check-solid">
-                                                                <input class="form-check-input" type="radio"
+                                                                <input class="form-check-input" type="radio" required
                                                                     name="attendee[{{$member->memberID}}]"
                                                                     value="attendant" id="flexCheckboxLg" />
                                                                 <label class="form-check-label" for="flexCheckboxLg">
@@ -260,10 +260,9 @@ input.readonly {
                                     <!--begin::Body-->
                                     <div class="card-header">
                                         <!--begin::Card header-->
-                                        <div class="card-title fs-3 fw-bold">م<input type="text" size="1"
+                                        <div class="card-title fs-3 fw-bold">رقم/<input type="text" size="1"
                                                 name="topicID[{{$topic->discussiontopic_topicID}}]" class="readonly"
-                                                readonly value="{{$topic->discussiontopic_topicID}}">./</div>
-                                        <div class="card-title fs-3 fw-bold">
+                                                readonly value="{{$topic->discussiontopic_topicID}}"> 
                                             {{$topicDetails[$topic->discussiontopic_topicID][0]->topicDescription}}<br>{{$topicDetails[$topic->discussiontopic_topicID][0]->ResolutionDescription}}
                                         </div>
                                         <!--end::Card header-->
@@ -273,7 +272,7 @@ input.readonly {
                                             <!--begin::Input group-->
                                             <div class="input-group">
                                                 <span class="input-group-text">المداولات</span>
-                                                <textarea rows="2" style="margin-right: 10px" class="form-control"
+                                                <textarea rows="2" style="margin-right: 10px" class="form-control" required
                                                     name="deliberation[{{$topic->discussiontopic_topicID}}]"
                                                     aria-label="With textarea"></textarea>
                                             </div>
@@ -298,7 +297,7 @@ input.readonly {
                                                                             <div class="input-group">
                                                                                 <span
                                                                                     class="input-group-text">القرارات</span>
-                                                                                <textarea rows="2"
+                                                                                <textarea rows="2" required
                                                                                     style="margin-right: 10px"
                                                                                     class="form-control"
                                                                                     name="decision[ ]"
@@ -309,7 +308,7 @@ input.readonly {
                                                                         <div style="display: inline-block"
                                                                             class=" col-sm-2">
                                                                             
-                                                                            <select aria-hidden="true" class="form-select w-100 ml-5 fs-5 " name="executionDepartment[ ]"
+                                                                            <select aria-hidden="true" class="form-select w-100 ml-5 fs-5 " name="executionDepartment[ ]"required
                                                                                 id="">
                                                                                 <option value="" disabled selected hidden>جهة التنفيذ</option>
                                                                                 @foreach($employees as $employee)
@@ -319,7 +318,7 @@ input.readonly {
                                                                         </div>
                                                                         <div
                                                                             style="display: inline-block;margin-left: 7px">
-                                                                            <input placeholder="اجل التنفيذ"
+                                                                            <input placeholder="اجل التنفيذ" required
                                                                                 class="form-control  ml-1" type="text"
                                                                                 name="executionDeadline[ ]"
                                                                                 id="">
@@ -375,7 +374,7 @@ input.readonly {
                                                                 class="align-items-center">
                                                                 <div style="display: inline-block"
                                                                     class="form-check form-check-custom form-check-success form-check-solid">
-                                                                    <input class="form-check-input" type="radio"
+                                                                    <input class="form-check-input" type="radio" required
                                                                         name="tracking[{{$topic->discussiontopic_topicID}}]"
                                                                         value="done" id="flexCheckboxLg">
                                                                     <label class="form-check-label"

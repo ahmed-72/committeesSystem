@@ -124,7 +124,7 @@ if( str_contains($current ,'ession')) $session= $current;
                     <div class="menu-item pt-5">
                         <!--begin:Menu content-->
                         <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">الأعضاء</span>
+                            <span class="menu-heading fw-bold text-uppercase fs-7">المستخدمين</span>
                         </div>
                         <!--end:Menu content-->
                     </div>
@@ -149,7 +149,7 @@ if( str_contains($current ,'ession')) $session= $current;
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                            <span class="menu-title mx-4">صفحات الأعضاء</span>
+                            <span class="menu-title mx-4">صفحات المستخدمين</span>
                             <span class="menu-arrow "></span>
 
                         </span>
@@ -164,7 +164,7 @@ if( str_contains($current ,'ession')) $session= $current;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">عرض صفحات الأعضاء</span>
+                                    <span class="menu-title">عرض صفحات المستخدمين</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -314,7 +314,19 @@ if( str_contains($current ,'ession')) $session= $current;
                         <div class="menu-sub menu-sub-accordion">
                             <!--begin:Menu item-->
                             @if(Auth::user()->type == 'super-admin')
-
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link @if($current==route('addCommittee.create')) active @endif"
+                                    href="{{route('addCommittee.create')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">إنشاء لجنة</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+                            
                             <div class="menu-item">
                                 <!--begin:Menu link-->
                                 <a class="menu-link @if($current==route('allCommittee')) active @endif"
@@ -410,11 +422,11 @@ if( str_contains($current ,'ession')) $session= $current;
     <!--end::sidebar menu-->
     <!--begin::Footer-->
      <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6 " id="kt_app_sidebar_footer">
-        <a href="../../demo1/dist/documentation/getting-started.html"
+        <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=GTvVlcRwQMHjlPxRmhLPbjkjxzzTlNMchNlcGmzhQRCNjdhHLhWXTQTwGNxHBDCWXcFLhhGppbNNr"
             class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100"
             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
             title="200+ in-house components and 3rd-party plugins">
-            <span class="btn-label">Button</span>
+            <span class="btn-label">راسلنا !</span>
             <!- -begin::Svg Icon | path: icons/duotune/general/gen005.svg- ->
             <span class="svg-icon btn-icon svg-icon-2 m-0">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

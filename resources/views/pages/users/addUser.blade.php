@@ -1,11 +1,10 @@
 @extends('pages.parent')
 
-@section('title','Wellcome to Dashboard')
 
-@section('page_name','Users')
+@section('page_name','الأعضاء')
 
-@section('main_path','Users')
-@section('sub_path','Add User')
+@section('main_path','الأعضاء')
+@section('sub_path','إضافة عضو')
 
 
 
@@ -48,7 +47,7 @@
                 <!--begin::Card body-->
                 <div class="card-body d-flex flex-center flex-column pt-12 p-9">
                     <h3>إضافة مستخدم جديد</h3>
-                    <form class="form col-7" enctype="multipart/form-data" action="{{route('addUser.store')}}"
+                    <form class="form col-7"  enctype="multipart/form-data" action="{{route('addUser.store')}}"
                         method="post">
                         @csrf
                         <input class="form-control bg-transparent " type="text" placeholder="الاسم"

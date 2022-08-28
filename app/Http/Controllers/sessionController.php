@@ -34,7 +34,8 @@ class sessionController extends Controller
         $session = session::where('committee_committeeID', $committeeID)->first();
         $this->authorize('member', $session);
 
-        $sessions = session::where('committee_committeeID', $committeeID)->get();
+        $paginate=10;
+        $sessions = session::where('committee_committeeID', $committeeID)->paginate($paginate);
         return view('pages/sessions/showSessions')->with('sessions', $sessions);
     }
     /**
@@ -57,8 +58,8 @@ class sessionController extends Controller
         $members = member::where('employee_employeeID', $employeeID)->with('employee', 'committee')->get();
         $previousSessions = array();
         $upcomingSessions = array();
-
-        foreach ($members as $member) {
+       
+        foreach ($members as $member) { 
             $temps = session::where('committee_committeeID', $member->committee->committeeID)->where('sessionDate', '<', $today)->orderBy('sessionDate')->with('committee')->get();
             foreach ($temps as $temp) {
                 $previousSessions[] = $temp;
@@ -70,7 +71,7 @@ class sessionController extends Controller
             $temps = [];
         }
 
-        return view('pages/sessions/mySessions')->with(['previousSessions' => $previousSessions, 'upcomingSessions' => $upcomingSessions]);
+        return view('pages/sessions/mySessions')->with(['previousSessions' => $previousSessions, 'upcomingSessions' => $upcomingSessions]); 
     }
 
     /**
@@ -421,8 +422,9 @@ $dd=[];
         $this->authorize('member', $session);
 
         $session = session::where(['committee_committeeID' => $committeeID, 'sessionID' => $sessionID])->with('committee')->first();
-        $members = sessionmember::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->orderBy('member_memberID', 'ASC')->with('member')->get();
-        //dd($members->member->employee->employeeName);
+        $members = sessionmember::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->orderBy('member_memberID', 'ASC')->with(['member'=>['employee']])->get();
+       // dd($members[0]->member->employee->employeeName);
+       //dd($members->toArray());
         $topics = sessionTopic::where(['committee_committeeID' => $committeeID, 'session_sessionID' => $sessionID])->with('committee')->with('discussiontopic')->get();
         $topicDetails = array();
         $count = 0;

@@ -5,7 +5,7 @@
 @section('page_name','الصفحة الرئيسية')
 
 @section('main_path','الصفحة الرئيسية')
-@section('sub_path','')
+@section('sub_path','الصفحة الرئيسية')
 
 
 

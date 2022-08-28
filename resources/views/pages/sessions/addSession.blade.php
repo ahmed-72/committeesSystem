@@ -1,41 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('pages.parent')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
-        integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
+@section('page_name','إضافة جلسة جديدة')
+@section('main_path','الجلسات')
+@section('sub_path','إضافة جلسة جديدة')
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/pricing/">
+@section('styles')
+@endsection
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
-    <title>Document</title>
-</head>
 
-<body dir="rtl">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <div class="navbar-brand">
-            <img src="https://palsawa.com/uploads/images/2y3r0.jpg" width="40" height="40"
-                class="d-inline-block align-top" alt="">
-        </div>
 
-        <h5 class="my-0 mr-md-auto font-weight-normal">وزارة الأوقاف و الشؤون الدينية</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#"></a>
-        </nav>
-    </div>
-
-    @if($errors->any())
-    <ul class="alert alert-danger col-6">
-        @foreach($errors->all() as $message)
-        <li>{{$message}}</li>
-        @endforeach
-    </ul>
-    @endif
+@if($errors->any())
+<ul class="alert alert-danger col-6">
+    @foreach($errors->all() as $message)
+    <li>{{$message}}</li>
+    @endforeach
+</ul>
+@endif
+<div class="card card-flush h-md-100 col-9 px-4 fs-3">
 
     <div class="form-group" dir="rtl">
         <form action="{{route('addSession.store')}}" id="form" method="POST">
@@ -52,9 +35,10 @@
                         $replacement = ' -- ';
                         $committeeDate =substr_replace($id, $replacement, 8, 0); 
                         ?>
-                    <label class="form-control" type="text"  readonly>{{$id}} --{{$committeeDate}} --{{$committee->committeeName}} </label>
+                    <label class="form-control" type="text" readonly>{{$id}} --{{$committeeDate}}
+                        --{{$committee->committeeName}} </label>
                     <input class="form-control" type="text" name="committeeID" id="committeeID" value="{{$id}}" hidden>
-                
+
                 </div>
 
                 <div class="mb-2 mt-2">
@@ -87,6 +71,11 @@
 
         </form>
     </div>
-</body>
 
-</html>
+</div>
+</div>
+
+@endsection
+
+@section('scripts')
+@endsection

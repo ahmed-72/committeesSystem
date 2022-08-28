@@ -3,7 +3,7 @@
 <!--begin::Head-->
 <head>
     <base href="">
-    {{--    <title>@yield('title')</title>--}}
+    <title>@yield('sub_path')</title>
     <meta charset="utf-8"/>
     <meta name="description"
           content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Blazor, Django, Flask &amp; Laravel versions. Grab your copy now and get life-time updates for free."/>
@@ -24,7 +24,6 @@
     <link rel="stylesheet" type="text/css"
           href="{{asset('assets/plugins/custom/dataTables-bootstrap4/dataTables.bootstrap4.min.css')}}">
 
-
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8"/>
     <link rel="shortcut icon" href="{{asset('assets/media/logos/favicon.ico')}}"/>
     <!--begin::Fonts-->
@@ -44,13 +43,20 @@
 
     <!-- Toastr -->
     <link rel="stylesheet" href="{{asset('assets/plugins/custom/toastr/toastr.min.css')}}">
-    @yield('styles')
 
+    @yield('styles')
+    <link rel="stylesheet" href="http://www.fontstatic.com/f=flat-jooza"/>
     <style>
+        * {
+            font-family: 'flat-jooza';
+        }
        .app-footer{
         margin-top:while min(80px);
        } 
+       
     </style>
+    <link rel="icon"  href="{{asset('assets/media/logos/wakflogo.png')}}">
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->

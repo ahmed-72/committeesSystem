@@ -1,11 +1,9 @@
 @extends('pages.parent')
 
-@section('title','Show Users')
+@section('page_name','الأعضاء')
 
-@section('page_name','Users')
-
-@section('main_path','users')
-@section('sub_path','show users')
+@section('main_path','الأعضاء')
+@section('sub_path','عرض الأعضاء')
 
 
 @section('styles')

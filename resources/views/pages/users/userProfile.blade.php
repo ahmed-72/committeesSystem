@@ -1,11 +1,9 @@
 @extends('pages.parent')
 
-@section('title','Wellcome to Dashboard')
+@section('page_name','الأعضاء')
 
-@section('page_name','Demo')
-
-@section('main_path','Demo')
-@section('sub_path','Demo')
+@section('main_path','الأعضاء')
+@section('sub_path','الصفحة الشخصية')
 
 
 

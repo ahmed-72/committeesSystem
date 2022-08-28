@@ -112,9 +112,9 @@ img{
                 <th>اجل التنفيذ</th>
             </tr>
             <tr> 
-                <td colspan="3"> <label for="" cols="50" rows="5">{{$topic->decisions}} </label></td>
-                <td><label for="">{{$topic->executionDepartment}}</label></td>
-                <td><label for="">{{$topic->executionDeadline}}</label></td>
+                <td colspan="3"> <label for="" cols="50" rows="5">@if($topic->decisions!=null)@foreach($topic->decisions as $decision){{$decision}}<br> @endforeach @endif </label></td>
+                <td><label for="">@if($topic->executionDepartment!=null)@foreach($topic->executionDepartment as $department){{$department}}<br>@endforeach @endif </label></td>
+                <td><label for="">@if($topic->executionDeadline!=null)@foreach($topic->executionDeadline as $deadline){{$deadline}}<br> @endforeach @endif </label></td>
             </tr>
 
         </tbody>
