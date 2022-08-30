@@ -126,7 +126,7 @@
                                                 <!--end::Info-->
                                                 <div class="d-flex my-4">
                                                     @if($upcomingSession->status == 'dead') <a
-                                                        href="{{route('printReport',$upcomingSession->sessionID )}}"><span
+                                                        href="{{route('printReport',['committeeID'=>$upcomingSession->committee_committeeID ,'sessionID'=>$upcomingSession->sessionID])}}"><span
                                                             class="fonts btn btn-sm btn-primary me-2">معاينة
                                                             و طباعة محضر الجلسة</span></a>@endif
                                                     @if($upcomingSession->status == 'inProgress')<a

@@ -1,12 +1,13 @@
 @extends('pages.parent')
 
-@section('page_name','الأعضاء')
+@section('page_name','المستخدمين')
 
-@section('main_path','الأعضاء')
-@section('sub_path','عرض الأعضاء')
+@section('main_path','المستخدمين')
+@section('sub_path','عرض المستخدمين')
 
 
 @section('styles')
+
 @endsection
 
 @section('content')

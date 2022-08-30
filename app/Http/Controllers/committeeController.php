@@ -265,7 +265,7 @@ class CommitteeController extends Controller
 
         $today = date('Y-m-d');
         $afterThreeDays = date('Y-m-d', strtotime('+3 days'));
-        $beforThreeDays = date('Y-m-d', strtotime('-3 days'));
+        $beforThreeDays = date('Y-m-d', strtotime('+60 days'));
 
         $sessions = session::where('sessionDate', '>', $today)->where('sessionDate', '<', $afterThreeDays)->get();
         foreach ($sessions as $session) {
@@ -289,7 +289,7 @@ class CommitteeController extends Controller
         $sessions = $committee->sessions;
         $nearSessions = array();
         foreach ($sessions as $session) {
-            if ( $session->sessionDate <= $afterThreeDays && $session->sessionDate >= $beforThreeDays) {
+            if ( $session->sessionDate > $afterThreeDays && $session->sessionDate > $beforThreeDays) {
                 $nearSessions[] = $session;
             }
         }
@@ -327,7 +327,7 @@ class CommitteeController extends Controller
         $sessions = $committee->sessions;
         $nearSessions = array();
         foreach ($sessions as $session) {
-            if ( $session->sessionDate <= $afterThreeDays && $session->sessionDate >= $beforThreeDays) {
+            if ( $session->sessionDate > $today ) {
                 $nearSessions[] = $session;
             }
         }

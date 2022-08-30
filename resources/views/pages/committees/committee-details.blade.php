@@ -338,7 +338,7 @@ $watining=array();
                                     
                                     <!--begin::Details-->
                                   
-                                    <div class="fw-semibold">
+                                    <div class="fw-semibold mx-5">
                                         <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$wati->topicDescription}}</a>
                                         <!--begin::Info-->
                                         <div class="text-gray-600">
@@ -469,17 +469,10 @@ $watining=array();
                                             <!--end::Info-->
                                             <!--begin::Action-->
                                             
-                                                @if($session->status == 'ready')
-                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm" href="{{route('sessionReport.create',['committeeID'=>$session->committee_committeeID ,'sessionID'=>$session->sessionID])}}">
-                                                افتتاح الجلسة
-                                                @elseif($session->status == 'dead')
-                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm"  href="{{route('printReport',['committeeID'=>$session->committee_committeeID ,'sessionID'=>$session->sessionID])}}">
-                                                معاينة وطباعة محضر الجلسة
-                                                @elseif($session->status == 'inProgress') 
-                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm"  href="{{route('prepareSession',['committeeID'=>$session->committee_committeeID ,'sessionID'=>$session->sessionID])}}"> 
-                                                تحضير
-                                                @else
-                                                @endif
+                                               
+                                                <a class="btn btn-bg-light btn-active-color-primary btn-sm" href="{{route('addDiscussionTopics.create',['committeeID'=>$session->committee_committeeID ])}}">
+                                                إضافة مواضيع للنقاش في هذه الجلسة
+                                                
                                             </a>
                                             <!--end::Action-->
                                         </div>

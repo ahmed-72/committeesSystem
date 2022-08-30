@@ -177,7 +177,7 @@ if( str_contains($current ,'ession')) $session= $current;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">إضافة عضو جديد</span>
+                                    <span class="menu-title">إضافة مستخدم جديد</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -245,7 +245,7 @@ if( str_contains($current ,'ession')) $session= $current;
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">صلاحيات الأعضاء</span>
+                                        <span class="menu-title">صلاحيات المستخدمين</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
@@ -258,7 +258,7 @@ if( str_contains($current ,'ession')) $session= $current;
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">إضافة صلاحية لعضو</span>
+                                        <span class="menu-title">إضافة صلاحية لمستخدم</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
